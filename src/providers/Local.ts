@@ -15,7 +15,7 @@
       */
      public static config(): any {
          dotenv.config({ path: path.join(__dirname, '../../.env') });
-
+         const monitorName = process.env.STATUS_MONITOR_NAME || 'status_monitor';
          const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
          const port = process.env.PORT || 4040;
          const mongooseUrl = process.env.MONGOOSE_URL;
@@ -25,6 +25,7 @@
          const apiPrefix = process.env.API_PREFIX || 'oni-chan';
 
          return {
+            monitorName,
             mongooseUrl,
             mslHost,
             msUsername,

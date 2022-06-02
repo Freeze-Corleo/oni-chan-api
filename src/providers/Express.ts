@@ -1,7 +1,9 @@
 import express from 'express';
+
 import Locals from '../providers/Local';
 import Route from '../providers/Route';
 import Log from '../middlewares/Log';
+import Kernel from '../middlewares/Kernel';
 import ExceptionHandler from '../exception/Handler';
 
 class Express {
@@ -13,8 +15,8 @@ class Express {
   constructor() {
     this.express = express();
     Log.info("Express :: Mounting process for Express server");
-    this.mountDotEnv();
     this.mountMiddlewares();
+    this.mountDotEnv();
     this.mountRoutes();
   }
 
@@ -29,7 +31,7 @@ class Express {
    * Mount all middlewares for express server
    */
   private mountMiddlewares() {
-
+    Kernel.init(this.express);
   }
 
   /**
