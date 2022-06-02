@@ -11,7 +11,7 @@ import Locals from './Local';
 import Log from '../middlewares/Log';
 
 export class MongoDatabase {
-  public static init(): any {
+  public static initMg(): any {
     const strConnection: string = Locals.config().mongooseUrl;
 
     mongoose.connect(strConnection, (error: MongoError) => {
@@ -23,6 +23,23 @@ export class MongoDatabase {
             Log.info('connected to mongo server at: ' + strConnection);
         }
     });
+  }
 
+  public static initMs(): any {
+    var mysql = require('mysql');
+    const host: string = Locals.config().mslHost;
+    const user: string = Locals.config().msUsername;
+    const password: string = Locals.config().msPassword;
+
+    var con = mysql.createConnection({
+      host: host,
+      user: user,
+      password: password
+    });
+    
+    con.connect(function(err) {
+      if (err) throw err; //TODO léo ? 
+      Log.info('connected to sql server at: ' + host);
+    });
   }
 }
