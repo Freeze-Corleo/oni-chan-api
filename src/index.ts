@@ -1,6 +1,14 @@
 import Log from '../src/middlewares/Log';
 import Locals from './providers/Local';
 
-Log;
-console.log(Locals.config().url)
-console.log(Locals.config().port);
+import App from './providers/App';
+
+/**
+ * Run the Database pool
+ */
+  App.loadDatabase();
+
+  /**
+  * Run the Server on Clusters
+  */
+  App.loadServer();

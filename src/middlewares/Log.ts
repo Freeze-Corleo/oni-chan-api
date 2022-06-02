@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { createLogger, format, transports } from 'winston';
+import winston from 'winston';
 
 /**
  * Define the Log class to implement log process
@@ -34,7 +34,7 @@ class Log {
    */
 	public info (_string: string): void {
 		this.addLog('INFO', _string);
-    this.debug(`[INFO] ${_string}`);
+    this.addConsoleLog(`${_string}`, "info").info(_string);
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Log {
    */
 	public warn (_string: string): void {
 		this.addLog('WARN', _string);
-    this.debug(`[WARN] ${_string}`);
+    this.addConsoleLog(`${_string}`, "info").warn(_string);
 	}
 
 	/**
@@ -51,11 +51,8 @@ class Log {
    * @param _string define the content message in log
    */
 	public error (_string: string): void {
-		// Line break and show the first line
-		console.log('\x1b[31m%s\x1b[0m', '[ERROR] :: ' + _string.split(/r?\n/)[0]);
-
 		this.addLog('ERROR', _string);
-    this.debug(`[ERROR] ${_string}`);
+    this.addConsoleLog(`${_string}`, "error").error(_string);
 	}
 
    /**
@@ -64,12 +61,8 @@ class Log {
    */
 	public custom (_custom: string, _string: string): void {
 		this.addLog(_custom, _string);
-    this.debug(`[${_custom}] ${_string}`);
+    this.addConsoleLog(`[${_custom}] ${_string}`, "info").info(_string);
 	}
-
-  public debug (_string: string): void {
-    this.addConsoleLog(_string);
-  }
 
 
   /**
@@ -103,20 +96,35 @@ class Log {
 		});
   }
 
-  private addConsoleLog(_string: string) {
+  private addConsoleLog(_string: string, level: any): winston.Logger {
     const templateFunction = ({ level, message, timestamp }) =>
-    `${timestamp} [${level.toUpperCase()}] ${message}`;
+    `${timestamp} [${level}] ${message}`;
+    const logFormat = winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple(),
+      winston.format.printf(templateFunction),
+    )
 
-    const logFormat = format.printf(templateFunction);
+    const myCustomLevels = {
+      levels: {
+        info: 0,
+        warn: 1,
+        error: 2,
+        debug: 3
+      },
+      colors: {
+        info: 'green',
+        warn: 'yellow',
+        error: 'red',
+        debug: 'blue'
+      }
+    };
 
-    const myLevels = {
-      info: 2,
-      debug: 5,
-      error: 0
-    }
+    winston.addColors(myCustomLevels.colors);
 
-    const logger = createLogger({
-      levels: myLevels,
+
+    const logger = winston.createLogger({
+      // levels: myCustomLevels.levels,
       transports: [
         //
         // - Write to all logs with level `info` and below to `combined.log`
@@ -124,12 +132,14 @@ class Log {
         //
         // new winston.transports.File({ filename: 'error.log', level: 'error' }),
         // new winston.transports.File({ filename: 'combined.log' }),
-        new transports.Console({
-          format: format.combine(format.timestamp(), logFormat)
+
+        new winston.transports.Console({
+          format: winston.format.combine(winston.format.timestamp(), logFormat)
         })
       ]
     });
-    return logger.debug(_string);
+
+    return logger;
   }
 
 }

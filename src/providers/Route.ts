@@ -12,7 +12,7 @@ import apiRouter from './../routes/Api';
 class Route {
   public mountApi(_express: Application): Application {
     const apiPrefix = Locals.config().apiPrefix;
-    Log.info('[+] Route [object] :: Mounting API routes');
+    Log.info('Route :: Mounting API routes');
 
     return _express.use(`/${apiPrefix}`, apiRouter);
   }

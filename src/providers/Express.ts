@@ -1,6 +1,7 @@
 import express from 'express';
 import Locals from '../providers/Local';
 import Route from '../providers/Route';
+import Log from '../middlewares/Log';
 import ExceptionHandler from '../exception/Handler';
 
 class Express {
@@ -11,7 +12,7 @@ class Express {
    */
   constructor() {
     this.express = express();
-
+    Log.info("Express :: Mounting process for Express server");
     this.mountDotEnv();
     this.mountMiddlewares();
     this.mountRoutes();
@@ -42,6 +43,7 @@ class Express {
    * Starts the express server
    */
   public init(): any {
+    Log.info("Express :: Initializing Express server");
     const port: number = Locals.config().port;
 
     // Registering Exception / Error Handlers
@@ -52,7 +54,10 @@ class Express {
 
     // Start the server on the specified port
     this.express.listen(port, (): void => {
-        return console.log('\x1b[33m%s\x1b[0m', `Server :: Running @ 'http://localhost:${port}'`);
+        return console.log('\x1b[33m%s\x1b[0m', `[INFO] Server :: Running server at 'http://localhost:${port}'`);
     });
+    Log.info(`Express :: Server listening on port ${port}`);
   }
 }
+
+export default new Express();
