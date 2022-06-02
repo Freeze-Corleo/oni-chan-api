@@ -19,12 +19,16 @@
          const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
          const port = process.env.PORT || 4040;
          const mongooseUrl = process.env.MONGOOSE_URL;
-         const msSqlUrl = process.env.MY_SQL_URL;
+         const mslHost = process.env.HOST_MS;
+         const msUsername = process.env.USERNAME_MS;
+        const msPassword = process.env.PASSWORD_MS;
          const apiPrefix = process.env.API_PREFIX || 'oni-chan';
 
          return {
             mongooseUrl,
-            msSqlUrl,
+            mslHost,
+            msUsername,
+            msPassword,
             apiPrefix,
             port,
             url,
