@@ -12,5 +12,16 @@ export class Database {
     const strConnection = Locals.config().mongooseUrl;
     const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
+    mongoose.connect(strConnection, options, (error: MongoError) => {
+        // handle the error case
+        if (error) {
+            Log.info('Failed to connect to the Mongo server!!');
+            console.log(error);
+            throw error;
+        } else {
+            Log.info('connected to mongo server at: ' + strConnection);
+        }
+    });
+
   }
 }
