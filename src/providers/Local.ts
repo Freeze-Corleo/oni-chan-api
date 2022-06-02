@@ -1,7 +1,7 @@
 /**
  * Define App Locals & Configs
  *
- * @author Mike Christopher SYLVESTRE <mike.sylvestre@lyknowledge.io>
+ * @author Léo DELPON <leo.delpon@viacesi.fr>
  */
 
  import { Application } from 'express';
@@ -21,7 +21,7 @@
          const mongooseUrl = process.env.MONGOOSE_URL;
          const mslHost = process.env.HOST_MS;
          const msUsername = process.env.USERNAME_MS;
-        const msPassword = process.env.PASSWORD_MS;
+         const msPassword = process.env.PASSWORD_MS;
          const apiPrefix = process.env.API_PREFIX || 'oni-chan';
 
          return {
