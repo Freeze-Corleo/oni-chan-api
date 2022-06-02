@@ -19,9 +19,11 @@
          const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
          const port = process.env.PORT || 4040;
          const mongooseUrl = process.env.MONGOOSE_URL;
+         const apiPrefix = process.env.API_PREFIX || 'oni-chan';
 
          return {
             mongooseUrl,
+            apiPrefix,
             port,
             url,
          };

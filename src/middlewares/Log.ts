@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { createLogger, format, transports } from 'winston';
 
 /**
  * Define the Log class to implement log process
@@ -35,7 +36,7 @@ class Log {
 		this.addLog('INFO', _string);
 	}
 
-	  /**
+	/**
    * Adds WARN prefix string to the log string
    * @param _string define the content message in log
    */
@@ -43,7 +44,7 @@ class Log {
 		this.addLog('WARN', _string);
 	}
 
-	  /**
+	/**
    * Adds ERROR prefix string to the log string
    * @param _string define the content message in log
    */
@@ -54,13 +55,17 @@ class Log {
 		this.addLog('ERROR', _string);
 	}
 
-	  /**
+   /**
    * Adds CUSTOM prefix string to the log string
    * @param _string define the content message in log
    */
 	public custom (_custom: string, _string: string): void {
 		this.addLog(_custom, _string);
 	}
+
+  public debug (_string: string): void {
+    this.addConsoleLog(_string);
+  }
 
 
   /**
@@ -92,6 +97,35 @@ class Log {
 				return console.log('\x1b[31m%s\x1b[0m', 'Error cloudn\'t open the log file for appending');
 			}
 		});
+  }
+
+  private addConsoleLog(_string: string) {
+    const templateFunction = ({ level, message, timestamp }) =>
+    `${timestamp} [${level.toUpperCase()}] ${message}`;
+
+    const logFormat = format.printf(templateFunction);
+
+    const myLevels = {
+      info: 2,
+      debug: 5,
+      error: 0
+    }
+
+    const logger = createLogger({
+      levels: myLevels,
+      transports: [
+        //
+        // - Write to all logs with level `info` and below to `combined.log`
+        // - Write all logs error (and below) to `error.log`.
+        //
+        // new winston.transports.File({ filename: 'error.log', level: 'error' }),
+        // new winston.transports.File({ filename: 'combined.log' }),
+        new transports.Console({
+          format: format.combine(format.timestamp(), logFormat)
+        })
+      ]
+    });
+    return logger.debug(_string);
   }
 
 }
