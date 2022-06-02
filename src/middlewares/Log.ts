@@ -34,6 +34,7 @@ class Log {
    */
 	public info (_string: string): void {
 		this.addLog('INFO', _string);
+    this.debug(`[INFO] ${_string}`);
 	}
 
 	/**
@@ -42,6 +43,7 @@ class Log {
    */
 	public warn (_string: string): void {
 		this.addLog('WARN', _string);
+    this.debug(`[WARN] ${_string}`);
 	}
 
 	/**
@@ -53,6 +55,7 @@ class Log {
 		console.log('\x1b[31m%s\x1b[0m', '[ERROR] :: ' + _string.split(/r?\n/)[0]);
 
 		this.addLog('ERROR', _string);
+    this.debug(`[ERROR] ${_string}`);
 	}
 
    /**
@@ -61,6 +64,7 @@ class Log {
    */
 	public custom (_custom: string, _string: string): void {
 		this.addLog(_custom, _string);
+    this.debug(`[${_custom}] ${_string}`);
 	}
 
   public debug (_string: string): void {
