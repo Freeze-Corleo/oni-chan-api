@@ -23,7 +23,7 @@ class App {
   }
 
   public loadWorker(): void {
-    Log.info('Worker :: Booting @ Master...');
+    Log.info('Worker :: Loading workers at Master node');
   }
 
   public loadDatabase() {
