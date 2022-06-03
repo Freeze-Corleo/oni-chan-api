@@ -23,9 +23,11 @@
          const msUsername = process.env.USERNAME_MS;
          const msPassword = process.env.PASSWORD_MS;
          const apiPrefix = process.env.API_PREFIX || 'oni-chan';
+         const appSecret = process.env.APP_SECRET || 'test-secret-string-for-session';
 
          return {
             monitorName,
+            appSecret,
             mongooseUrl,
             mslHost,
             msUsername,
