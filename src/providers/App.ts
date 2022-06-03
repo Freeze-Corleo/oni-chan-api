@@ -22,6 +22,10 @@ class App {
     Express.init();
   }
 
+  public loadWorker(): void {
+    Log.info('Worker :: Booting @ Master...');
+  }
+
   public loadDatabase() {
     Log.info("Configuration :: Loading database config");
     Database.init();
