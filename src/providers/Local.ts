@@ -17,7 +17,7 @@
          dotenv.config({ path: path.join(__dirname, '../../.env') });
          const monitorName = process.env.STATUS_MONITOR_NAME || 'status_monitor';
          const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
-         const port = process.env.PORT || 4040;
+         const port = process.env.PORT || 8080;
          const mongooseUrl = process.env.MONGOOSE_URL;
          const mslHost = process.env.HOST_MS;
          const msUsername = process.env.USERNAME_MS;
