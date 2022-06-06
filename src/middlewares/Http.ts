@@ -11,7 +11,7 @@
 
  const cors = require('cors');
  const session = require('express-session');
- const expressValidator = require('express-validator');
+//  const expressValidator = require('express-validator');
  const flash = require('express-flash');
  const compress = require('compression');
 
@@ -33,8 +33,8 @@
          // Disable the x-powered-by header in response
          _express.disable('x-powered-by');
 
-         // Enables the request payload validator
-         _express.use(expressValidator());
+        //  // Enables the request payload validator
+        //  _express.use(expressValidator());
 
          // Enables the request flash messages
          _express.use(flash());
