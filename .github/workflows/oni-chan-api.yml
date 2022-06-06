@@ -30,6 +30,8 @@ jobs:
       # it will then install all dependencies
       - name: Install dependencies
         run: npm install
+      - name: Install serve package
+        run: npm install serve --s
       # it will run alls unit-tests
       - name: Run all tests
         run: npm run test

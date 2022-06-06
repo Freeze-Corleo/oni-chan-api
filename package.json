@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev": "npx nodemon src/index.ts",
+    "start": "serve -s build",
     "lint": "eslint src/**/*.ts",
     "build": "npx tsc --build --verbose"
   },
