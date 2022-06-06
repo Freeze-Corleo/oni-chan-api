@@ -45,4 +45,3 @@ jobs:
           heroku_api_key: 55ef7caf-1520-4ce3-8533-b0ab16f89454
           heroku_app_name: "preprod-oni-chan-api"
           heroku_email: delponleo@gmail.com
-          branch: "main"
