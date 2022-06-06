@@ -19,15 +19,7 @@ class Socket {
   public mountSocketServer(_express: Application) {
     Log.info(' Socket :: Mounting Socket server in API');
 
-    this.socketio(_express, {
-      cors: {
-          origin: Local.config().url ?? `https://test-onichan-api.herokuapp.com`,
-          methods: ["GET", "POST"],
-          path: "/socket.io",
-          transport:['websocket'],
-          secure: true,
-        }
-  });
+    this.socketio(_express);
   }
 
 }

@@ -52,7 +52,6 @@ class Express {
    * Starts the express server
    */
   public init(): any {
-    require('appmetrics-dash').attach().monitor();
     Log.info("Express :: Initializing Express server");
     const port: number = Locals.config().port;
 
