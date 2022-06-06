@@ -5,5 +5,7 @@
  */
 
 class Queue {
-
+  constructor() {
+    console.log('test webhook');
+  }
 }
