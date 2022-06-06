@@ -15,7 +15,7 @@
          Log.info('CORS :: Booting the \'CORS\' middleware...');
 
          const options = {
-             origin: Locals.config().url,
+             origin: "*",
              transports: ['websocket', 'polling'],
              optionsSuccessStatus: 200 // Some legacy browsers choke on 204
          };
