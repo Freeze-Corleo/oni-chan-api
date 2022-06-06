@@ -17,7 +17,7 @@ class Socket {
 
 
   public mountSocketServer(_express: Application) {
-    Log.info(' Socket :: Mounting Socket server in API');
+    Log.info('Socket :: Mounting Socket server in API');
 
     this.socketio(_express);
   }
