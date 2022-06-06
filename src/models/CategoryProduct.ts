@@ -1,0 +1,3 @@
+class CategoryProduct{
+    title: string;
+}

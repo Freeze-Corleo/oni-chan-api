@@ -1,0 +1,3 @@
+class Allergic{
+    title: string;
+}
