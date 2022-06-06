@@ -2,13 +2,14 @@ import express from 'express';
 
 import Locals from '../providers/Local';
 import Route from '../providers/Route';
+import Socket from '../middlewares/Socket';
 import Log from '../middlewares/Log';
 import Kernel from '../middlewares/Kernel';
 import ExceptionHandler from '../exception/Handler';
 
 class Express {
   public express: express.Application;
-
+  public http = require('http');
   /**
    * Initialize the express server
    */
@@ -18,6 +19,7 @@ class Express {
     this.mountMiddlewares();
     this.mountDotEnv();
     this.mountRoutes();
+    this.mountClientWebSocket();
   }
 
   /**
@@ -39,6 +41,11 @@ class Express {
    */
   private mountRoutes() {
     this.express = Route.mountApi(this.express);
+  }
+
+  private mountClientWebSocket() {
+    const server = this.http.createServer(this.express);
+    Socket.mountSocketServer(server);
   }
 
   /**
