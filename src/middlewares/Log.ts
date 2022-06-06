@@ -74,7 +74,11 @@ class Log {
 		const _that = this;
 		_logType = _logType.toUpperCase();
 
-    //TODO : bug : Error cloudn't open the log file for appending. 
+    //Create dif if not already created
+    if (!fs.existsSync(_that.baseDir)){
+        fs.mkdirSync(_that.baseDir);
+    }
+
 		fs.open(`${_that.baseDir}${_that.fileName}`, 'a', (_err, _fileDescriptor) => { 
 			if (!_err && _fileDescriptor) {
 				// Append to file and close it
