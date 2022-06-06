@@ -33,12 +33,12 @@ if(cluster.default.isPrimary) {
    */
   ClusterEvent.cluster(cluster.default);
 
-  // /**
-  //  * Run the Worker every minute
-  //  * Note: we normally start worker after
-  //  * the entire app is loaded
-  //  */
-  // setTimeout(() => App.loadWorker(), 1000 * 60);
+  /**
+   * Run the Worker every minute
+   * Note: we normally start worker after
+   * the entire app is loaded
+   */
+  setTimeout(() => App.loadWorker(), 1000 * 60);
 } else {
   // /**
   //  * Run the Database pool

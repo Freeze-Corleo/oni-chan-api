@@ -17,6 +17,7 @@
     "@bull-board/express": "^3.11.1",
     "@mollie/api-client": "^3.6.0",
     "@playmoweb/payline-typescript-sdk": "^1.1.5",
+    "appmetrics-dash": "^5.3.0",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "bull": "^4.8.3",
