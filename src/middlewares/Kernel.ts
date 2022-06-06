@@ -10,8 +10,6 @@
  import CORS from './CORS';
  import Http from './Http';
 
- import Locals from '../providers/Local';
-
  class Kernel {
      public static init(_express: Application): Application {
 
