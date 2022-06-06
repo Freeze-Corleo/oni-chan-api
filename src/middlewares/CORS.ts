@@ -16,6 +16,7 @@
 
          const options = {
              origin: Locals.config().url,
+             transports: ['websocket', 'polling'],
              optionsSuccessStatus: 200 // Some legacy browsers choke on 204
          };
 
