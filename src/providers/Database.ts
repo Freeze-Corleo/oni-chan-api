@@ -40,10 +40,10 @@ export class Database {
     con.connect(function(err) {
         // handle the error case
         if (err) {
-          Log.error('[-] Failed to connect to the Mongo server!!');
+          Log.error('[-] Failed to connect to mysql server!!');
           throw err;
       } else {
-          Log.info('connected to mongo server at: ' + host);
+          Log.info('connected to mysql server at: ' + host);
       }
     });
   }
