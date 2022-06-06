@@ -75,7 +75,7 @@ class Log {
 		_logType = _logType.toUpperCase();
 
     //TODO : bug : Error cloudn't open the log file for appending.
-		fs.open(`${_that.baseDir}${_that.fileName}`, 'w', (_err, _fileDescriptor) => {
+		fs.open(`${_that.baseDir}${_that.fileName}`, 'a', (_err, _fileDescriptor) => {
 			if (!_err && _fileDescriptor) {
 				// Append to file and close it
 				fs.appendFile(_fileDescriptor, `${_that.linePrefix} [${_logType}] ${_string}\n`, (_err) => {
