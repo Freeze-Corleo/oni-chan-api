@@ -31,7 +31,7 @@ var Log_1 = __importDefault(require("./Log"));
 var Local_1 = __importDefault(require("../providers/Local"));
 var cors = require('cors');
 var session = require('express-session');
-var expressValidator = require('express-validator');
+//  const expressValidator = require('express-validator');
 var flash = require('express-flash');
 var compress = require('compression');
 var Http = /** @class */ (function () {
@@ -50,8 +50,6 @@ var Http = /** @class */ (function () {
         }));
         // Disable the x-powered-by header in response
         _express.disable('x-powered-by');
-        // Enables the request payload validator
-        _express.use(expressValidator());
         // Enables the request flash messages
         _express.use(flash());
         /**

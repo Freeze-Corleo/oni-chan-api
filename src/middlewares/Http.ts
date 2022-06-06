@@ -11,7 +11,6 @@
 
  const cors = require('cors');
  const session = require('express-session');
-//  const expressValidator = require('express-validator');
  const flash = require('express-flash');
  const compress = require('compression');
 

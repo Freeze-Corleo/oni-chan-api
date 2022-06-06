@@ -41,7 +41,7 @@ var Locals = /** @class */ (function () {
         dotenv.config({ path: path.join(__dirname, '../../.env') });
         var monitorName = process.env.STATUS_MONITOR_NAME || 'status_monitor';
         var url = process.env.APP_URL || "http://localhost:".concat(process.env.PORT);
-        var port = process.env.PORT || 4040;
+        var port = process.env.PORT || 8080;
         var mongooseUrl = process.env.MONGOOSE_URL;
         var mslHost = process.env.HOST_MS;
         var msUsername = process.env.USERNAME_MS;
