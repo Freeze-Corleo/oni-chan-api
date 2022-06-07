@@ -4,21 +4,6 @@
  * @author Léo DELPON <leo.delpon@viacesi.fr>
  */
 class StatusMonitorController {
-    private pidUsage = require('pidUsage');
-    private status: {
-        cpu: number;
-        memory: number;
-        parentProcessId: string;
-        processId: string;
-    } = { cpu: 0, memory: 0, parentProcessId: '', processId: '' };
-
-    public generateState(): void {
-        this.pidUsage(process.pid, (err, stats) => {
-            this.status.cpu = stats.cpu;
-            this.status.parentProcessId = stats.ppid;
-            this.status.processId = stats.pid;
-        });
-    }
 
     /**
      * Perform cpu and memory data gathering for monitoring
@@ -26,8 +11,26 @@ class StatusMonitorController {
      * @param {any} res
      * @returns {cpu: number, memory: number, parentProcessId: string, processId: string}
      */
-    public static perform(req, res) {
-        return res.json('nigga');
+    public static perform(req, res, time) {
+        const pidUsage = require('pidUsage');
+        var responseTime = require('response-time')
+
+        pidUsage(process.pid, (err, stats) => {
+
+            var status: {
+                cpu: number;
+                memory: number;
+                parentProcessId: string;
+                processId: string;
+            } = { cpu: 0, memory: 0, parentProcessId: '', processId: '' };
+
+            status.cpu = stats.cpu; //percentage
+            status.memory = stats.memory/1000000; //bytes -> MB
+            status.parentProcessId = stats.ppid; //PPID
+            status.processId = stats.pid; //PID
+
+            return res.json(status)
+        });
     }
 }
 

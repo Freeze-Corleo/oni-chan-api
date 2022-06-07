@@ -13,6 +13,7 @@
  const session = require('express-session');
  const flash = require('express-flash');
  const compress = require('compression');
+ const responseTime = require('response-time')
 
  class Http {
      public static mount(_express: Application): Application {
@@ -58,6 +59,8 @@
          // Enables the "gzip" / "deflate" compression for response
          _express.use(compress());
 
+        // Enable response time 
+        _express.use(responseTime());
          return _express;
      }
  }
