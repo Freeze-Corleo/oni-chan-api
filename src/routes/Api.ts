@@ -11,5 +11,6 @@ const router = Router();
  * Monitoring endpoints
  */
 router.get('/status/get-monitor', StatusMonitorController.perform);
+router.get('/status/healthCheckDB', StatusMonitorController.healthCheckDB);
 
 export default router;

@@ -29,6 +29,15 @@ class StatusMonitorController {
     public static perform(req, res) {
         return res.json('nigga');
     }
+
+    public static healthCheckDB(req, res) {
+        const healthcheck = {
+            uptime: process.uptime(),
+            message: 'OK',
+            timestamp: Date.now()
+        };
+        return res.send(healthcheck);
+    }
 }
 
 export default StatusMonitorController;
