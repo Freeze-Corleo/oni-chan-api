@@ -4,26 +4,20 @@
  * @author Mike Christopher SYLVESTRE <mike.sylvestre@lyknowledge.io>
  */
 
- import { Application } from 'express';
+import { Application } from 'express';
+import CORS from './CORS';
+import Http from './Http';
 
- import StatusMonitor from './StatusMonitor';
- import CORS from './CORS';
- import Http from './Http';
+class Kernel {
+    public static init(_express: Application): Application {
+        // Mount CORS Policy middleware
+        _express = CORS.mount(_express);
 
- class Kernel {
-     public static init(_express: Application): Application {
+        // Mount Http request setting
+        _express = Http.mount(_express);
 
-         // Mount status monitor middleware
-         _express = StatusMonitor.mount(_express);
+        return _express;
+    }
+}
 
-         // Mount CORS Policy middleware
-         _express = CORS.mount(_express);
-
-         // Mount Http request setting
-         _express = Http.mount(_express);
-
-         return _express;
-     }
- }
-
- export default Kernel;
+export default Kernel;
