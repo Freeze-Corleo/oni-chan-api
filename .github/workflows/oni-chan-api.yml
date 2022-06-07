@@ -16,7 +16,7 @@ on:
 jobs:
   check-quality:
       runs-on: ubuntu-latest
-      name: A job to check my code quality
+      name: check-quality
       steps:
       - name: Check code meets quality standards
         id: code-inspector
@@ -27,9 +27,9 @@ jobs:
           force_ref: 'none'
           min_quality_grade: 'WARNING'
           min_quality_score: '50'
-          max_defects_rate: '0.0001'
-          max_complex_functions_rate: '0.0001'
-          max_long_functions_rate: '0.0001'
+          max_defects_rate: '0.01'
+          max_complex_functions_rate: '0.01'
+          max_long_functions_rate: '0.01'
           project_name: ''
           max_timeout_sec: '600'
   # This workflow contains a single job called "build"
