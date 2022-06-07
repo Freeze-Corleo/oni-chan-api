@@ -1,3 +1,3 @@
 # oni-chan-api
 
-![example branch parameter](https://github.com/github/docs/actions/workflows/oni-chan-api.yml/badge.svg?branch=feature-1)
+[![Node.js CI Testing](https://github.com/Freeze-Corleo/oni-chan-api/actions/workflows/oni-chan-api.yml/badge.svg)](https://github.com/Freeze-Corleo/oni-chan-api/actions/workflows/oni-chan-api.yml)
