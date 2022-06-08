@@ -7,6 +7,7 @@
 import { Application } from 'express';
 import CORS from './CORS';
 import Http from './Http';
+import Swagger from './Swagger';
 
 class Kernel {
     public static init(_express: Application): Application {
@@ -15,6 +16,9 @@ class Kernel {
 
         // Mount Http request setting
         _express = Http.mount(_express);
+
+        // Mount Swagger documentation
+        _express = Swagger.mount(_express);
 
         return _express;
     }

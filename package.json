@@ -52,9 +52,10 @@
     "os": "^0.1.2",
     "pg": "^8.7.3",
     "pidusage": "^3.0.0",
-    "response-time": "^2.3.2",
     "socket.io": "^4.5.1",
     "stripe": "^8.221.0",
+    "swagger-autogen": "^2.21.3",
+    "swagger-ui-express": "^4.4.0",
     "uuid": "^8.3.2",
     "winston": "^3.7.2"
   },

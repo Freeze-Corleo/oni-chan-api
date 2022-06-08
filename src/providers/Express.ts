@@ -8,65 +8,68 @@ import Kernel from '../middlewares/Kernel';
 import ExceptionHandler from '../exception/Handler';
 
 class Express {
-  public express: express.Application;
-  public http = require('http');
-  /**
-   * Initialize the express server
-   */
-  constructor() {
-    this.express = express();
-    Log.info("Express :: Mounting process for Express server");
-    this.mountMiddlewares();
-    this.mountDotEnv();
-    this.mountRoutes();
-    this.mountClientWebSocket();
-  }
+    public express: express.Application;
+    public http = require('http');
+    /**
+     * Initialize the express server
+     */
+    constructor() {
+        this.express = express();
+        Log.info('Express :: Mounting process for Express server');
+        this.mountRoutes();
+        this.mountMiddlewares();
+        this.mountDotEnv();
+        this.mountClientWebSocket();
+    }
 
-  /**
-   * Mount the environment variables
-   */
-  private mountDotEnv() {
-    this.express = Locals.init(this.express);
-  }
+    /**
+     * Mount the environment variables
+     */
+    private mountDotEnv() {
+        this.express = Locals.init(this.express);
+    }
 
-  /**
-   * Mount all middlewares for express server
-   */
-  private mountMiddlewares() {
-    Kernel.init(this.express);
-  }
+    /**
+     * Mount all middlewares for express server
+     */
+    private mountMiddlewares() {
+        Kernel.init(this.express);
+    }
 
-  /**
-   * Mount the API routes
-   */
-  private mountRoutes() {
-    this.express = Route.mountApi(this.express);
-  }
+    /**
+     * Mount the API routes
+     */
+    private mountRoutes() {
+        this.express = Route.mountApi(this.express);
+    }
 
-  private mountClientWebSocket() {
-    const server = this.http.createServer(this.express);
-    Socket.mountSocketServer(server);
-  }
+    private mountClientWebSocket() {
+        const server = this.http.createServer(this.express);
+        Socket.mountSocketServer(server);
+    }
 
-  /**
-   * Starts the express server
-   */
-  public init(): any {
-    Log.info("Express :: Initializing Express server");
-    const port: number = Locals.config().port;
+    /**
+     * Starts the express server
+     */
+    public init(): any {
+        Log.info('Express :: Initializing Express server');
+        const port: number = Locals.config().port;
 
-    // Registering Exception / Error Handlers
-    this.express.use(ExceptionHandler.logErrors);
-    this.express.use(ExceptionHandler.clientErrorHandler);
-    this.express.use(ExceptionHandler.errorHandler);
-    this.express = ExceptionHandler.notFoundHandler(this.express);
+        // Registering Exception / Error Handlers
+        this.express.use(ExceptionHandler.logErrors);
+        this.express.use(ExceptionHandler.clientErrorHandler);
+        this.express.use(ExceptionHandler.errorHandler);
+        this.express = ExceptionHandler.notFoundHandler(this.express);
 
-    // Start the server on the specified port
-    this.express.listen(port, (): void => {
-        return console.log('\x1b[33m%s\x1b[0m', `[INFO] Server :: Running server at 'http://localhost:${port}'`);
-    });
-    Log.info(`Express :: Server listening on port ${port}`);
-  }
+        // Start the server on the specified port
+        this.express.listen(port, (): void => {
+            return console.log(
+                '\x1b[33m%s\x1b[0m',
+                `[INFO] Server :: Running server at 'http://localhost:${port}'`
+            );
+        });
+        Log.info(`Express :: Server listening on port ${port}`);
+    }
 }
 
 export default new Express();
