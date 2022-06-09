@@ -2,7 +2,9 @@
  * Implement abstract class for api controllers
  */
 
-abstract class Api {
+import { CRUDController } from '../../types';
+
+export abstract class Api extends CRUDController {
     protected static getApiToken(req): string {
         return req.headers.authorization &&
             req.headers.authorization.split(' ')[0] === 'Basic'

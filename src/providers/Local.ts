@@ -29,6 +29,7 @@ class Locals {
         const msPort = process.env.PORT_MS;
         const apiPrefix = process.env.API_PREFIX || 'oni-chan';
         const appSecret = process.env.APP_SECRET || 'test-secret-string-for-session';
+        const jwtSecret = process.env.JWT_SECRET || 'secret-api-freeze-corleonnnne';
 
         return {
             apiKey,
@@ -42,7 +43,8 @@ class Locals {
             msPort,
             apiPrefix,
             port,
-            url
+            url,
+            jwtSecret
         };
     }
 

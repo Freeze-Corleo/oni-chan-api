@@ -1,11 +1,15 @@
 import { Router } from 'express';
-import * as expressJwt from 'express-jwt';
-
-import Locals from '../providers/Local';
 
 import StatusMonitorController from '../controllers/Monitor/StatusController';
 
+import RegisterController from '../controllers/Auth/Register';
+
 const router = Router();
+
+/**
+ * Authentication endpoints
+ */
+router.post('/auth/register', RegisterController.perform);
 
 /**
  * Monitoring endpoints

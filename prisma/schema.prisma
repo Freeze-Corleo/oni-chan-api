@@ -14,7 +14,7 @@ model User {
   email       String
   password    String
   phone       String
-  address     Address  @relation(fields: [addressUuid], references: [uuid])
+  address     Address[]
   createdAt   DateTime
   updatedAt   DateTime
   googleAuth  Boolean
@@ -27,7 +27,6 @@ model User {
   profilUrl   String
   isBanned    Boolean
   uuid        String   @id
-  addressUuid String
 }
 
 model Address {
@@ -36,5 +35,6 @@ model Address {
   city    String
   zipCode String
   uuid    String @id
-  User    User[]
+  User    User @relation(fields: [userId], references: [uuid])
+  userId  String
 }
