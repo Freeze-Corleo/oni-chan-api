@@ -25,6 +25,7 @@
   "dependencies": {
     "@bull-board/express": "^3.11.1",
     "@mollie/api-client": "^3.6.0",
+    "@sendgrid/mail": "^7.7.0",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "bull": "^4.8.3",

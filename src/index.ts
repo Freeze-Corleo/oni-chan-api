@@ -4,6 +4,7 @@ import * as cluster from 'cluster';
 import ClusterEvent from './exception/ClusterEvent';
 
 import App from './providers/App';
+import Mail from './controllers/Mailing/Mail';
 
 // if (cluster.default.isPrimary) {
 //     /**
@@ -47,6 +48,11 @@ import App from './providers/App';
 //      */
 //     App.loadServer();
 // }
-
+const msg = {
+    to: 'pierre.forques@viacesi.fr', // Change to your recipient
+    subject: 'LDONRM667',
+    text: 'Han',
+  }
+Mail.sendEmail(msg);
 App.loadServer();
 App.loadDatabase();
