@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "heroku-prebuild": "npm i -g clinic ",
-    "dev": "npx nodemon src/index.ts",
+    "dev": "npx nodemon --ignore swagger_output_file.json src/index.ts",
     "start": "node build/index.js",
     "pretty-quick": "pretty-quick",
     "lint": "eslint src/**/*.ts",

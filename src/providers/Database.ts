@@ -10,20 +10,25 @@ import { MongoError } from 'mongodb';
 
 import Locals from './Local';
 import Log from '../middlewares/Log';
+import { clearConfigCache } from 'prettier';
 
 export class Database {
     public static init(): any {
         const strConnection: string = Locals.config().mongooseUrl;
 
-        mongoose.connect(strConnection, (error: MongoError) => {
-            // handle the error case
-            if (error) {
-                Log.error('Database :: Failed to connect to the Mongo server !!');
-                throw error;
-            } else {
-                Log.info('Database :: connected to mongo server at: ' + strConnection);
-            }
-        });
+        try {
+            mongoose.connect(strConnection, (error: MongoError) => {
+                // handle the error case
+                if (error) {
+                    Log.error('Database :: Failed to connect to the Mongo server !!');
+                    throw error;
+                } else {
+                    Log.info('Database :: connected to mongo server');
+                }
+            });
+        } catch (error) {
+            Log.error('Database :: Failed to connect to the Mongo server !!');
+        }
     }
 
     public static initMs(): any {
@@ -44,10 +49,10 @@ export class Database {
         con.connect(function (err) {
             // handle the error case
             if (err) {
-                Log.error('[-] Failed to connect to mysql server!!');
+                Log.error('Database :: Failed to connect to mysql server!!');
                 throw err;
             } else {
-                Log.info('connected to mysql server at: ' + host);
+                Log.info('Database :: connected to mysql server at: ' + host);
             }
         });
     }

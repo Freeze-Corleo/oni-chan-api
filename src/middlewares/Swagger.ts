@@ -8,10 +8,12 @@ import { Application } from 'express';
 import swaggerAutogen from 'swagger-autogen';
 import swaggerUi from 'swagger-ui-express';
 
+import * as path from 'path';
+
 class Swagger {
     private static instance: Swagger;
     public swaggerUi = swaggerUi;
-    public swaggerFile = require('../../src/swagger_output_file.json');
+    public swaggerFile = require('../../swagger_output_file.json');
     public swaggerAutogen = swaggerAutogen;
     private doc = {
         info: {
@@ -75,7 +77,7 @@ class Swagger {
      * @constructor
      */
     private constructor() {
-        const filePath = './src/swagger_output_file.json';
+        const filePath = path.join(__dirname, '../../swagger_output_file.json');
         const endpointsFiles = ['./src/routes/Api.ts'];
 
         this.swaggerAutogen()(filePath, endpointsFiles, this.doc).then(async () => {

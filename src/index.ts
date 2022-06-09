@@ -49,5 +49,6 @@ import Mail from './controllers/Mailing/Mail';
 //     App.loadServer();
 // }
 
-App.loadServer();
 App.loadDatabase();
+
+App.loadServer();

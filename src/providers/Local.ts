@@ -18,7 +18,9 @@ class Locals {
         const monitorName = process.env.STATUS_MONITOR_NAME || 'status_monitor';
         const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
         const port = process.env.PORT || 8080;
-        const mongooseUrl = process.env.MONGOOSE_URL;
+        const mongooseUrl =
+            process.env.MONGOOSE_URL ||
+            'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false';
         const mslHost = process.env.HOST_MS;
         const apiKey = process.env.API_KEY;
         const msUsername = process.env.USERNAME_MS;

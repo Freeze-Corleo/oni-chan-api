@@ -16,10 +16,10 @@ class Express {
     constructor() {
         this.express = express();
         Log.info('Express :: Mounting process for Express server');
-        this.mountRoutes();
-        this.mountMiddlewares();
         this.mountDotEnv();
+        this.mountRoutes();
         this.mountClientWebSocket();
+        this.mountMiddlewares();
     }
 
     /**
