@@ -71,7 +71,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Env value setting up
-run: echo '::set-env name=API_VERSION::${{ github.ref }}'
+        run: echo '::set-env name=API_VERSION::${{ github.ref }}'
       - name: Update API_VERSION on Heroku
         run: heroku config:set API_VERSION=${API_VERSION##*/} -a ${{ secrets.HEROKU_APP_NAME }}
         env:
