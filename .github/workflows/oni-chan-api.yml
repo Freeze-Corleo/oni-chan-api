@@ -66,9 +66,10 @@ jobs:
           heroku_app_name: "test-onichan-api"
           heroku_email: delponleo@gmail.com
         env:
-          HD_MONGOOSE_URL: mongodb://admin_freezecorleone:Tdedf3883&ChevalierBleu667&sofreezelaw@2.tcp.ngrok.io:14704/?readPreference=primary&appname=MongoDB%20Compass&ssl=false
+          HD_MONGOOSE_URL: mongodb://admin_freezecorleone:Tdedf3883&ChevalierBleu667&sofreezelaw@4.tcp.ngrok.io:13218/?readPreference=primary&appname=MongoDB%20Compass&ssl=false
           HD_HOST_MS: 4.tcp.ngrok.io
           HD_USERNAME_MS: root
           HD_PASSWORD_MS: Leodelponcesi12345&
           HD_DB_MS: db_freezou
           HD_PORT_MS: 19000
+          HD_DATABASE_URL: DATABASE_URL=mysql://root:Leodelponcesi12345&@2.tcp.ngrok.io:19449/db_freezou?connection_limit=5
