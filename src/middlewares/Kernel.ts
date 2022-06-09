@@ -18,7 +18,7 @@ class Kernel {
         _express = Http.mount(_express);
 
         // Mount Swagger documentation
-        _express = Swagger.mount(_express);
+        //_express = Swagger.getInstance().mount(_express)
 
         return _express;
     }
