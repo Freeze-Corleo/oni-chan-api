@@ -10,6 +10,8 @@ import * as dotenv from 'dotenv';
 import Log from '../middlewares/Log';
 import Express from '../providers/Express';
 import { Database } from '../providers/Database';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 class App {
     public loadConfiguration() {
@@ -29,6 +31,11 @@ class App {
     public loadDatabase() {
         Log.info('Configuration :: Loading database config');
         Database.init();
+    }
+
+    public async test() {
+        const allUsers = await prisma.user.findMany();
+        Log.info(allUsers.toString());
     }
 }
 

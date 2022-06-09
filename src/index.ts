@@ -52,3 +52,4 @@ import Mail from './controllers/Mailing/Mail';
 App.loadDatabase();
 
 App.loadServer();
+//App.test();

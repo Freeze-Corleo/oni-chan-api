@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  email       String
+  password    String
+  phone       String
+  address     Address  @relation(fields: [addressUuid], references: [uuid])
+  createdAt   DateTime
+  updatedAt   DateTime
+  googleAuth  Boolean
+  verifyUser  Boolean
+  emailCode   String
+  browser     String
+  isPartner   Boolean
+  isDeliver   Boolean
+  godFather   String
+  profilUrl   String
+  isBanned    Boolean
+  uuid        String   @id
+  addressUuid String
+}
+
+model Address {
+  street  String
+  number  String
+  city    String
+  zipCode String
+  uuid    String @id
+  User    User[]
+}
