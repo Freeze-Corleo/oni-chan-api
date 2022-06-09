@@ -48,11 +48,6 @@ import Mail from './controllers/Mailing/Mail';
 //      */
 //     App.loadServer();
 // }
-const msg = {
-    to: 'pierre.forques@viacesi.fr', // Change to your recipient
-    subject: 'LDONRM667',
-    text: 'Han',
-  }
-Mail.sendEmail(msg);
+
 App.loadServer();
 App.loadDatabase();
