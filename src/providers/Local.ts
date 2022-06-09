@@ -23,6 +23,8 @@ class Locals {
         const apiKey = process.env.API_KEY;
         const msUsername = process.env.USERNAME_MS;
         const msPassword = process.env.PASSWORD_MS;
+        const msDB = process.env.DB_MS;
+        const msPort = process.env.PORT_MS;
         const apiPrefix = process.env.API_PREFIX || 'oni-chan';
         const appSecret = process.env.APP_SECRET || 'test-secret-string-for-session';
 
@@ -34,6 +36,8 @@ class Locals {
             mslHost,
             msUsername,
             msPassword,
+            msDB,
+            msPort,
             apiPrefix,
             port,
             url

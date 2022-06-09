@@ -30,9 +30,13 @@ export class Database {
         const host: string = Locals.config().mslHost;
         const user: string = Locals.config().msUsername;
         const password: string = Locals.config().msPassword;
+        const database: string = Locals.config().msDB;
+        const port: string = Locals.config().msPort;
 
         const con = mysql.createConnection({
             host: host,
+            port: port,
+            database: database,
             user: user,
             password: password
         });
