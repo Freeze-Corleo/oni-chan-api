@@ -30,30 +30,4 @@ export class Database {
             Log.error('Database :: Failed to connect to the Mongo server !!');
         }
     }
-
-    public static initMs(): any {
-        const host: string = Locals.config().mslHost;
-        const user: string = Locals.config().msUsername;
-        const password: string = Locals.config().msPassword;
-        const database: string = Locals.config().msDB;
-        const port: string = Locals.config().msPort;
-
-        const con = mysql.createConnection({
-            host: host,
-            port: port,
-            database: database,
-            user: user,
-            password: password
-        });
-
-        con.connect(function (err) {
-            // handle the error case
-            if (err) {
-                Log.error('Database :: Failed to connect to mysql server!!');
-                throw err;
-            } else {
-                Log.info('Database :: connected to mysql server at: ' + host);
-            }
-        });
-    }
 }
