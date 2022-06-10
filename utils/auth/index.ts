@@ -48,6 +48,15 @@ class AuthTools {
     public static uuiGenerator() {
         return uuidv4();
     }
+
+    /**
+     * generate a token
+     */
+    public static tokenGenerator() {
+        return (
+            Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2)
+        );
+    }
 }
 
 export default AuthTools;

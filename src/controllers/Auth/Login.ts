@@ -4,6 +4,8 @@ import { PrismaClient } from '@prisma/client';
 import { ApiError } from '../../../types';
 import AuthTools from '../../../utils/auth/index';
 import Log from '../../middlewares/Log';
+import Mail from '../../helpers/SendGridHelper';
+import Locals from '../../providers/Local';
 
 const client = new PrismaClient();
 
@@ -103,6 +105,57 @@ class LoginController {
             });
         } catch (error) {
             Log.error('Route :: [/auth/change-password] error while changing password');
+            return res.status(500).json({ status: 500, message: error });
+        }
+    }
+
+    public static async forgotPassword(req: Request, res: Response, next: NextFunction) {
+        const email = req.body.email;
+        const correlationId = AuthTools.tokenGenerator();
+        const resetToken = AuthTools.tokenGenerator();
+
+        try {
+            Mail.sendEmail(
+                email,
+                {
+                    link: `${
+                        Locals.config().frontUrl
+                    }/password_reset/entry?correlationId=${correlationId}&resetToken=${resetToken}`
+                },
+                Locals.config().templateResetPassword
+            );
+
+            // Direct update on JSON fields isn't supported yet
+            // https://github.com/prisma/prisma/discussions/3070
+            const user = await client.user.findFirst({
+                where: {
+                    email
+                }
+            });
+
+            if (!user) {
+                Log.error('Route :: [/auth/forgot-password] user does not exist');
+                next(new ApiError({ status: 404, message: 'User does not exist' }));
+            }
+
+            await client.user.update({
+                where: {
+                    email
+                },
+                data: {
+                    corrId: correlationId,
+                    resetToken: resetToken,
+                    ...user
+                }
+            });
+
+            return res
+                .status(200)
+                .json({ status: 200, message: 'An email has been sent !' });
+        } catch (error) {
+            Log.error(
+                'Route :: [/auth/forgot-password] error during forgotten password process'
+            );
             return res.status(500).json({ status: 500, message: error });
         }
     }

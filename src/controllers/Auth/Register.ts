@@ -66,6 +66,8 @@ class RegisterController {
                     godFather: null,
                     profilUrl: null,
                     isBanned: false,
+                    corrId: null,
+                    resetToken: null,
                     uuid: AuthTools.uuiGenerator(),
                     password: AuthTools.hashPassword(password)
                 }

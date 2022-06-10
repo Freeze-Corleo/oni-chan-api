@@ -49,10 +49,9 @@ import Locals from './providers/Local';
 //     App.loadServer();
 // }
 
-import Mail from './helpers/SendGridHelper';
+App.loadDatabase();
 
-Mail.sendEmail(
-    'pierre.forques@viacesi.fr',
-    { number_one: '5', number_two: '8', number_three: '1', number_four: '7' },
-    'd-322b19e59603448da5aab104b70f3cb6'
-);
+/**
+ * Run the Server on Clusters
+ */
+App.loadServer();

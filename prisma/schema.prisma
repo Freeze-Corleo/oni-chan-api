@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  email      String
+  email      String     @unique
   password   String
-  phone      String
+  phone      String     @unique
   address    Address[]
   createdAt  DateTime
   updatedAt  DateTime
@@ -24,8 +24,10 @@ model User {
   status     String
   godFather  String
   profilUrl  String
+  resetToken String
+  corrId     String
   isBanned   Boolean
-  uuid       String    @id
+  uuid       String      @id
 }
 
 model Address {
