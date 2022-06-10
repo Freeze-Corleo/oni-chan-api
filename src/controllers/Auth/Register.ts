@@ -15,17 +15,8 @@ class RegisterController {
         let user = undefined;
         try {
             //
-            const {
-                email,
-                password,
-                address,
-                zipCode,
-                city,
-                phone,
-                browser,
-                isPartner,
-                isDeliver
-            } = req.body;
+            const { email, password, address, zipCode, city, phone, browser, status } =
+                req.body;
             if (
                 [
                     email,
@@ -35,8 +26,7 @@ class RegisterController {
                     city,
                     phone,
                     browser,
-                    isPartner,
-                    isDeliver
+                    status
                 ].includes(undefined)
             ) {
                 return next(
@@ -66,8 +56,7 @@ class RegisterController {
                     verifyUser: false,
                     emailCode: null,
                     browser,
-                    isPartner,
-                    isDeliver,
+                    status,
                     godFather: null,
                     profilUrl: null,
                     isBanned: false,
@@ -80,7 +69,7 @@ class RegisterController {
                 email,
                 phone,
                 verifyUser: 'false',
-                userType: isPartner ? 'true' : 'false',
+                userType: status ? 'true' : 'false',
                 profilUrl: ''
             };
 
@@ -108,7 +97,14 @@ class RegisterController {
             return next(error);
         } finally {
             if (user) {
-                // Envoyer le système de la notification par e-mail
+                await client.user.update({
+                    where: {
+                        uuid: user.uuid
+                    },
+                    data: {
+                        emailCode: 'emailCode'
+                    }
+                });
             }
         }
     }
