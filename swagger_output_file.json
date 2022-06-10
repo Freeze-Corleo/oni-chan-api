@@ -69,6 +69,30 @@
                 "responses": {}
             }
         },
+        "/auth/{id}/{emailCode}": {
+            "post": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "emailCode",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted"
+                    }
+                }
+            }
+        },
         "/status/get-monitor": {
             "get": {
                 "description": "",

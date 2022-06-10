@@ -5,10 +5,16 @@ import { PrismaClient } from '@prisma/client';
 
 const client = new PrismaClient();
 
+/**
+ * Implement registration process with email sending process
+ *
+ * @author Léo DELPON <leo.delpon@viacesi.fr>
+ */
 class RegisterController {
     public static async perform(req: Request, res: Response, next: NextFunction) {
         let user = undefined;
         try {
+            //
             const {
                 email,
                 password,
