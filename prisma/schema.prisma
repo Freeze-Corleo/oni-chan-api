@@ -11,22 +11,21 @@ datasource db {
 }
 
 model User {
-  email       String
-  password    String
-  phone       String
-  address     Address[]
-  createdAt   DateTime
-  updatedAt   DateTime
-  googleAuth  Boolean
-  verifyUser  Boolean
-  emailCode   String
-  browser     String
-  isPartner   Boolean
-  isDeliver   Boolean
-  godFather   String
-  profilUrl   String
-  isBanned    Boolean
-  uuid        String   @id
+  email      String
+  password   String
+  phone      String
+  address    Address[]
+  createdAt  DateTime
+  updatedAt  DateTime
+  googleAuth Boolean
+  verifyUser Boolean
+  emailCode  String
+  browser    String
+  status     Status
+  godFather  String
+  profilUrl  String
+  isBanned   Boolean
+  uuid       String    @id
 }
 
 model Address {
@@ -35,6 +34,12 @@ model Address {
   city    String
   zipCode String
   uuid    String @id
-  User    User @relation(fields: [userId], references: [uuid])
+  User    User   @relation(fields: [userId], references: [uuid])
   userId  String
+}
+
+enum Status {
+  RESTORER
+  CLIENT
+  DELIVERY_MAN
 }

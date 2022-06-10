@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
 
 class User {
     email: string;
@@ -11,11 +11,9 @@ class User {
     verifyUser: boolean;
     emailCode: string;
     browser: string;
-    isPartner: boolean;
-    isDeliver: boolean;
+    status: Status;
     godFather: ObjectId;
     profilUrl: string;
     isBanned: boolean;
     uuid: string;
-
 }
