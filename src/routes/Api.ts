@@ -14,6 +14,8 @@ const router = Router();
 router.post('/auth/register', RegisterController.perform);
 router.post('/auth/login', LoginController.perform);
 router.get('/auth/verify/:id/:emailCode', VerificationController.perform);
+router.post('/auth/change-password', LoginController.changePassword);
+router.post('/auth/logout', LoginController.logout);
 
 /**
  * Monitoring endpoints

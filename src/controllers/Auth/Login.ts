@@ -76,6 +76,36 @@ class LoginController {
             next(error);
         }
     }
+
+    public static async logout(req: Request, res: Response) {
+        req.session = null;
+        res.sendStatus(200);
+    }
+
+    public static async changePassword(req: Request, res: Response, next: NextFunction) {
+        const uuid = req.body.userId;
+        const newPassword = req.body.newPassword;
+        const confirmNewPassword = req.body.newPasswordConfirmed;
+
+        if (newPassword !== confirmNewPassword) {
+            Log.error("Route :: [/auth/change-password] passwords don't match");
+            return next(new ApiError({ status: 400, message: "Passwords don't match" }));
+        }
+
+        try {
+            await client.user.update({
+                where: {
+                    uuid
+                },
+                data: {
+                    password: AuthTools.hashPassword(newPassword)
+                }
+            });
+        } catch (error) {
+            Log.error('Route :: [/auth/change-password] error while changing password');
+            return res.status(500).json({ status: 500, message: error });
+        }
+    }
 }
 
 export default LoginController;
