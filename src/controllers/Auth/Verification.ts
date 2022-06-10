@@ -8,6 +8,8 @@ const client = new PrismaClient();
 
 /**
  * Implement verification process for email validation
+ *
+ * @author Léo DELPON <leo.delpon@viacesi.fr>
  */
 class VerificationController {
     public static async perform(req: Request, res: Response, next: NextFunction) {
@@ -32,6 +34,8 @@ class VerificationController {
                     .status(202)
                     .json({ status: 202, message: 'Validation code matched' });
             }
+
+            return res.status(500).json({ status: 500, message: 'Error from server' });
         } catch (error) {
             Log.error(`Route :: [/verify-code] server error: ${error}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));

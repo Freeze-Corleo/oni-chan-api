@@ -61,14 +61,17 @@ class Express {
         this.express.use(ExceptionHandler.errorHandler);
         this.express = ExceptionHandler.notFoundHandler(this.express);
 
-        // Start the server on the specified port
-        this.express.listen(port, (): void => {
-            return console.log(
-                '\x1b[33m%s\x1b[0m',
-                `[INFO] Server :: Running server at 'http://localhost:${port}'`
-            );
-        });
-        Log.info(`Express :: Server listening on port ${port}`);
+        // If in test mode, it will run on port 0 that means, it will choose the first randomly available port that he finds
+        if (Locals.config().nodeEnv !== 'test') {
+            // Start the server on the specified port
+            this.express.listen(port, (): void => {
+                return console.log(
+                    '\x1b[33m%s\x1b[0m',
+                    `[INFO] Server :: Running server at 'http://localhost:${port}'`
+                );
+            });
+            Log.info(`Express :: Server listening on port ${port}`);
+        }
     }
 }
 

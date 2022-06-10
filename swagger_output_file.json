@@ -69,8 +69,8 @@
                 "responses": {}
             }
         },
-        "/auth/{id}/{emailCode}": {
-            "post": {
+        "/auth/verify/{id}/{emailCode}": {
+            "get": {
                 "description": "",
                 "parameters": [
                     {
@@ -89,6 +89,9 @@
                 "responses": {
                     "202": {
                         "description": "Accepted"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }
@@ -104,7 +107,7 @@
                 }
             }
         },
-        "/status/healthCheckDB": {
+        "/status/health-check": {
             "get": {
                 "description": "",
                 "parameters": [],
