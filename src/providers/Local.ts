@@ -31,7 +31,7 @@ class Locals {
         const appSecret = process.env.APP_SECRET || 'test-secret-string-for-session';
         const jwtSecret = process.env.JWT_SECRET || 'secret-api-freeze-corleonnnne';
         const nodeEnv = process.env.NODE_ENV || 'test';
-
+        const sendGridKey = process.env.SEND_GRID_KEY || '';
         return {
             apiKey,
             monitorName,
@@ -46,7 +46,8 @@ class Locals {
             port,
             url,
             jwtSecret,
-            nodeEnv
+            nodeEnv,
+            sendGridKey
         };
     }
 
