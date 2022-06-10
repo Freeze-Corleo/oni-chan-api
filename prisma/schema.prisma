@@ -21,7 +21,7 @@ model User {
   verifyUser Boolean
   emailCode  String
   browser    String
-  status     Status
+  status     String
   godFather  String
   profilUrl  String
   isBanned   Boolean
@@ -36,10 +36,4 @@ model Address {
   uuid    String @id
   User    User   @relation(fields: [userId], references: [uuid])
   userId  String
-}
-
-enum Status {
-  RESTORER
-  CLIENT
-  DELIVERY_MAN
 }

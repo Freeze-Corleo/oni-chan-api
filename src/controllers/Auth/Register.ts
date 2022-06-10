@@ -3,6 +3,12 @@ import { ApiError } from '../../../types';
 import AuthTools from '../../../utils/auth/index';
 import { PrismaClient } from '@prisma/client';
 
+enum Status {
+    RESTORER = 'restorer',
+    CLIENT = 'client',
+    DELIVERY_MAN = 'delivery_man'
+}
+
 const client = new PrismaClient();
 
 /**
@@ -56,7 +62,7 @@ class RegisterController {
                     verifyUser: false,
                     emailCode: null,
                     browser,
-                    status,
+                    status: status ?? Status.CLIENT,
                     godFather: null,
                     profilUrl: null,
                     isBanned: false,
@@ -69,7 +75,7 @@ class RegisterController {
                 email,
                 phone,
                 verifyUser: 'false',
-                userType: status ? 'true' : 'false',
+                status: user.status,
                 profilUrl: ''
             };
 

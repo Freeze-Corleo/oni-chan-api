@@ -24,7 +24,7 @@ class AuthTools {
         email: string;
         phone: string;
         verifyUser: string;
-        userType: string;
+        status: string;
         profilUrl: string;
     }): string {
         return jwt.sign(user, Local.config().jwtSecret, {

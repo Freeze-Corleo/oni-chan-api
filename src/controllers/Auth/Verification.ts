@@ -25,7 +25,7 @@ class VerificationController {
             });
 
             if (!user) {
-                Log.error('Route :: [/verify-code] user already exist');
+                Log.error('Route :: [/auth/verify] user already exist');
                 return next(new ApiError({ status: 404, message: 'User not found' }));
             }
 
@@ -37,7 +37,7 @@ class VerificationController {
 
             return res.status(500).json({ status: 500, message: 'Error from server' });
         } catch (error) {
-            Log.error(`Route :: [/verify-code] server error: ${error}`);
+            Log.error(`Route :: [/auth/verify] server error: ${error}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));
         }
     }
