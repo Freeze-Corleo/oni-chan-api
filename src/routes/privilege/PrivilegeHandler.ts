@@ -34,7 +34,7 @@ class PrivilegeHandler {
     public static isRestaurant(req: Request, res: Response, next: NextFunction) {
         try {
             if (req.headers.authorization.split(' ')[0] === 'Bearer ') {
-                const jwtToken = req.headers.authorization.split(' ')[0];
+                const jwtToken = req.headers.authorization.split(' ')[1];
                 const decodedToken = jwt.decode(jwtToken, { complete: true });
                 if (decodedToken.payload['status'] === Status.DELIVERY_MAN) {
                     return next();
