@@ -30,6 +30,11 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "user-agent",
+                        "in": "header",
+                        "type": "string"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "schema": {
@@ -53,9 +58,6 @@
                                 "phone": {
                                     "example": "any"
                                 },
-                                "browser": {
-                                    "example": "any"
-                                },
                                 "status": {
                                     "example": "any"
                                 }
@@ -63,7 +65,11 @@
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
             }
         },
         "/auth/login": {
@@ -107,9 +113,6 @@
                     }
                 ],
                 "responses": {
-                    "202": {
-                        "description": "Accepted"
-                    },
                     "500": {
                         "description": "Internal Server Error"
                     }

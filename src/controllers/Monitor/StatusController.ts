@@ -10,7 +10,7 @@ class StatusMonitorController {
      * @param {any} res
      * @returns {cpu: number, memory: number, parentProcessId: string, processId: string}
      */
-    public static perform(req, res, time) {
+    public static perform(req, res) {
         const pidUsage = require('pidUsage');
         const os = require('os');
         pidUsage(process.pid, (err, stats) => {

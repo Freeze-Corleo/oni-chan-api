@@ -4,7 +4,6 @@ import * as cluster from 'cluster';
 import ClusterEvent from './exception/ClusterEvent';
 
 import App from './providers/App';
-import Locals from './providers/Local';
 
 // if (cluster.default.isPrimary && Locals.config().nodeEnv !== 'test') {
 //     /**

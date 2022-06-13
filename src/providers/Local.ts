@@ -34,6 +34,7 @@ class Locals {
         const sendGridKey = process.env.SEND_GRID_KEY || '';
         const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
         const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
+        const emailCodeTemplateId = process.env.SG_REGISTER_TEMPLATE || '';
         return {
             apiKey,
             monitorName,
@@ -51,7 +52,8 @@ class Locals {
             nodeEnv,
             sendGridKey,
             googleClientId,
-            googleClientSecret
+            googleClientSecret,
+            emailCodeTemplateId
         };
     }
 
