@@ -9,7 +9,6 @@ class Formatter {
 
     private modifyResponseBody(req: Request, res: Response, next: NextFunction) {
         const oldSend = res.send;
-        console.log(req.headers);
 
         res.send = function (data) {
             Log.info(data);

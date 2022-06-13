@@ -184,13 +184,36 @@
                 }
             }
         },
-        "/status/get-monitor": {
+        "/auth/google": {
             "get": {
                 "description": "",
                 "parameters": [],
+                "responses": {}
+            }
+        },
+        "/auth/google/callback": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {}
+            }
+        },
+        "/status/get-monitor": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "apiToken",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }
@@ -198,10 +221,19 @@
         "/status/health-check": {
             "get": {
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "apiToken",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
                 }
             }

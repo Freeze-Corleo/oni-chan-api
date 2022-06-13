@@ -7,6 +7,7 @@ import { Application } from 'express';
 import * as bodyParser from 'body-parser';
 import Log from './Log';
 import Locals from '../providers/Local';
+import Passport from '../providers/Passport';
 
 import cors from 'cors';
 import session from 'express-session';
@@ -64,6 +65,9 @@ class Http {
 
         // Enables the "gzip" / "deflate" compression for response
         _express.use(compress());
+
+        // Loads the passport configuration
+        _express = Passport.mountPackage(_express);
 
         return _express;
     }

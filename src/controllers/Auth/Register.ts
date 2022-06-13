@@ -58,7 +58,7 @@ class RegisterController {
                     phone,
                     createdAt: new Date(Date.now()),
                     updatedAt: new Date(Date.now()),
-                    googleAuth: false,
+                    googleAuth: null,
                     verifyUser: false,
                     emailCode: null,
                     browser,
@@ -66,8 +66,10 @@ class RegisterController {
                     godFather: null,
                     profilUrl: null,
                     isBanned: false,
-                    corrId: null,
                     resetToken: null,
+                    corrId: null,
+                    accessToken: null,
+                    refreshToken: null,
                     uuid: AuthTools.uuiGenerator(),
                     password: AuthTools.hashPassword(password)
                 }

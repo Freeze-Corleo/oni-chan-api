@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import passport from 'passport';
+
+import PrivilegeHandler from './privilege/PrivilegeHandler';
 
 import StatusMonitorController from '../controllers/Monitor/StatusController';
 
@@ -19,9 +22,37 @@ router.post('/auth/logout', LoginController.logout);
 router.post('/auth/password-forgotten', LoginController.forgotPassword);
 
 /**
+ * Google Authentication endpoints
+ */
+router.get(
+    '/auth/google',
+    passport.authenticate('google', {
+        scope: ['email', 'profile'],
+        failureRedirect: '/login'
+    })
+);
+
+router.get(
+    '/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req, res) => {
+        console.log(req);
+        return res.redirect('/account');
+    }
+);
+
+/**
  * Monitoring endpoints
  */
-router.get('/status/get-monitor', StatusMonitorController.perform);
-router.get('/status/health-check', StatusMonitorController.healthCheckDB);
+router.get(
+    '/status/get-monitor',
+    PrivilegeHandler.isBigMom,
+    StatusMonitorController.perform
+);
+router.get(
+    '/status/health-check',
+    PrivilegeHandler.isBigMom,
+    StatusMonitorController.healthCheckDB
+);
 
 export default router;
