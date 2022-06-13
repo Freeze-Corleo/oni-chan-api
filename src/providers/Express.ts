@@ -17,9 +17,9 @@ class Express {
         this.express = express();
         Log.info('Express :: Mounting process for Express server');
         this.mountDotEnv();
-        this.mountRoutes();
         this.mountClientWebSocket();
         this.mountMiddlewares();
+        this.mountRoutes();
     }
 
     /**

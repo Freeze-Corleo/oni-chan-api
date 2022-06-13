@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import passport from 'passport';
 
+import AuthTools from '../../utils/auth/index';
+
 import PrivilegeHandler from './privilege/PrivilegeHandler';
 
 import StatusMonitorController from '../controllers/Monitor/StatusController';
@@ -28,16 +30,28 @@ router.get(
     '/auth/google',
     passport.authenticate('google', {
         scope: ['email', 'profile'],
-        failureRedirect: '/login'
+        successRedirect: '/auth/google/success',
+        failureRedirect: '/auth/google/failed'
     })
 );
-
 router.get(
     '/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
-    (req, res) => {
-        console.log(req);
-        return res.redirect('/account');
+    (req: any, res) => {
+        const datas = {
+            email: req.user.email,
+            phone: req.user.phone,
+            verifyUser: 'true',
+            status: req.user.status,
+            profilUrl: req.user.profilUrl
+        };
+
+        const token = AuthTools.generateToken(datas);
+        return res
+            .cookie('FREEZE_JWT', token, {
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
+            })
+            .redirect('/');
     }
 );
 

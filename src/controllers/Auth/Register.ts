@@ -56,6 +56,8 @@ class RegisterController {
                         }
                     },
                     phone,
+                    firstname: null,
+                    lastname: null,
                     createdAt: new Date(Date.now()),
                     updatedAt: new Date(Date.now()),
                     googleAuth: null,

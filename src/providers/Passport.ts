@@ -1,10 +1,13 @@
 import passport from 'passport';
 import { Application } from 'express';
+import { PrismaClient } from '@prisma/client';
 
 import LocalStrategy from '../services/strategies/Local';
 import GoogleStrategy from '../services/strategies/Google';
 
 import Log from '../middlewares/Log';
+
+const client = new PrismaClient();
 
 /**
  *
@@ -14,12 +17,16 @@ class Passport {
         _express = _express.use(passport.initialize());
         _express = _express.use(passport.session());
 
-        passport.serializeUser<any, any>((req, user: any, done) => {
-            done(null, user.id);
+        passport.serializeUser<any, any>((user: any, done) => {
+            // after the google passport check the payload is redirected here
+            done(null, user.uuid);
         });
 
-        passport.deserializeUser((obj, cb) => {
-            cb(null, obj);
+        passport.deserializeUser(async (id, done) => {
+            const user = await client.user.findUnique({
+                where: { uuid: id }
+            });
+            done(null, user);
         });
 
         this.mountLocalStrategies();
