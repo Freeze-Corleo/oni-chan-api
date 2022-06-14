@@ -7,6 +7,8 @@
     "test": "jest",
     "heroku-prebuild": "npm i -g clinic ",
     "dev": "npx nodemon --ignore swagger_output_file.json src/index.ts",
+    "predev": "npx prisma generate && npm run migrate",
+    "migrate": "npx prisma db push",
     "start": "node build/index.js",
     "pretty-quick": "pretty-quick",
     "lint": "eslint src/**/*.ts",
