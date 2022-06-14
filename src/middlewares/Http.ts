@@ -42,7 +42,7 @@ class Http {
                 limit: Locals.config().maxUploadLimit
             })
         );
-
+        
         _express.use(
             bodyParser.urlencoded({
                 limit: Locals.config().maxUploadLimit,

@@ -5,4 +5,4 @@ class CustomizationItem{
     price: number;
     title: string;
     isSoldOut: boolean;
-}
+} export default CustomizationItem;
