@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+
 import { ApiError } from '../../../types';
 import AuthTools from '../../../utils/auth/index';
-import { PrismaClient } from '@prisma/client';
+import Mail from '../../helpers/SendGridHelper';
+import Locals from '../../providers/Local';
 
 enum Status {
     RESTORER = 'restorer',
@@ -21,19 +24,12 @@ class RegisterController {
         let user = undefined;
         try {
             //
-            const { email, password, address, zipCode, city, phone, browser, status } =
-                req.body;
+            const { email, password, address, zipCode, city, phone, status } = req.body;
+
             if (
-                [
-                    email,
-                    password,
-                    address,
-                    zipCode,
-                    city,
-                    phone,
-                    browser,
-                    status
-                ].includes(undefined)
+                [email, password, address, zipCode, city, phone, status].includes(
+                    undefined
+                )
             ) {
                 return next(
                     new ApiError({
@@ -49,47 +45,36 @@ class RegisterController {
                     address: {
                         create: {
                             street: address,
-                            number: null,
+                            number: '',
                             city: city,
                             zipCode,
                             uuid: AuthTools.uuiGenerator()
                         }
                     },
                     phone,
+                    firstname: '',
+                    lastname: '',
                     createdAt: new Date(Date.now()),
                     updatedAt: new Date(Date.now()),
-                    googleAuth: false,
+                    googleAuth: '',
                     verifyUser: false,
-                    emailCode: null,
-                    browser,
+                    emailCode: '',
+                    browser: req.headers['user-agent'],
                     status: status ?? Status.CLIENT,
-                    godFather: null,
-                    profilUrl: null,
+                    godFather: '',
+                    profilUrl: '',
                     isBanned: false,
-                    corrId: null,
-                    resetToken: null,
+                    resetToken: '',
+                    corrId: '',
+                    accessToken: '',
+                    refreshToken: '',
                     uuid: AuthTools.uuiGenerator(),
                     password: AuthTools.hashPassword(password)
                 }
             });
 
-            const datas = {
-                email,
-                phone,
-                verifyUser: 'false',
-                status: user.status,
-                profilUrl: ''
-            };
-
-            const token = AuthTools.generateToken(datas);
-
-            return res
-                .cookie('FREEZE_JWT', token, {
-                    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
-                })
-                .json({
-                    token
-                });
+            // return id to be sent to the /auth/verify/:id/:emailCode endpoint for verification
+            return res.status(201).json({ status: 201, message: user.uuid });
         } catch (error) {
             if (error.code === 'P2002') {
                 // return res.status(400).json({
@@ -105,14 +90,26 @@ class RegisterController {
             return next(error);
         } finally {
             if (user) {
+                const verificationCode = AuthTools.generateRandomVerificationCode();
                 await client.user.update({
                     where: {
                         uuid: user.uuid
                     },
                     data: {
-                        emailCode: 'emailCode'
+                        emailCode: verificationCode
                     }
                 });
+
+                Mail.sendEmail(
+                    user.email,
+                    {
+                        code1: verificationCode[0],
+                        code2: verificationCode[1],
+                        code3: verificationCode[2],
+                        code4: verificationCode[3]
+                    },
+                    Locals.config().emailCodeTemplateId
+                );
             }
         }
     }

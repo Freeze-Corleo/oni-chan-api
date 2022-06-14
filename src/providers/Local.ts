@@ -32,6 +32,9 @@ class Locals {
         const jwtSecret = process.env.JWT_SECRET || 'secret-api-freeze-corleonnnne';
         const nodeEnv = process.env.NODE_ENV || 'test';
         const sendGridKey = process.env.SEND_GRID_KEY || '';
+        const googleClientId = process.env.GOOGLE_CLIENT_ID || '';
+        const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
+        const emailCodeTemplateId = process.env.SG_REGISTER_TEMPLATE || '';
         return {
             apiKey,
             monitorName,
@@ -47,7 +50,10 @@ class Locals {
             url,
             jwtSecret,
             nodeEnv,
-            sendGridKey
+            sendGridKey,
+            googleClientId,
+            googleClientSecret,
+            emailCodeTemplateId
         };
     }
 

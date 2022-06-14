@@ -1,4 +1,9 @@
 import { Router } from 'express';
+import passport from 'passport';
+
+import AuthTools from '../../utils/auth/index';
+
+import PrivilegeHandler from './privilege/PrivilegeHandler';
 
 import StatusMonitorController from '../controllers/Monitor/StatusController';
 
@@ -19,10 +24,50 @@ router.post('/auth/logout', LoginController.logout);
 router.post('/auth/password-forgotten', LoginController.forgotPassword);
 
 /**
+ * Google Authentication endpoints
+ */
+router.get(
+    '/auth/google',
+    passport.authenticate('google', {
+        scope: ['email', 'profile'],
+        successRedirect: '/auth/google/success',
+        failureRedirect: '/auth/google/failed'
+    })
+);
+router.get(
+    '/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    (req: any, res) => {
+        const datas = {
+            email: req.user.email,
+            phone: req.user.phone,
+            verifyUser: 'true',
+            status: req.user.status,
+            profilUrl: req.user.profilUrl
+        };
+
+        const token = AuthTools.generateToken(datas);
+        return res
+            .cookie('FREEZE_JWT', token, {
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
+            })
+            .redirect('/');
+    }
+);
+
+/**
  * Monitoring endpoints
  */
-router.get('/status/get-monitor', StatusMonitorController.perform);
-router.get('/status/health-check', StatusMonitorController.healthCheckDB);
+router.get(
+    '/status/get-monitor',
+    PrivilegeHandler.isBigMom,
+    StatusMonitorController.perform
+);
+router.get(
+    '/status/health-check',
+    PrivilegeHandler.isBigMom,
+    StatusMonitorController.healthCheckDB
+);
 
 /**
  * Products endpoints

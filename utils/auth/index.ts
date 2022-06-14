@@ -57,6 +57,14 @@ class AuthTools {
             Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2)
         );
     }
+
+    /**
+     * Generate a 4-digit code for email validation
+     * @returns {string}
+     */
+    public static generateRandomVerificationCode() {
+        return (Math.floor(Math.random() * 9000) + 1000).toString();
+    }
 }
 
 export default AuthTools;

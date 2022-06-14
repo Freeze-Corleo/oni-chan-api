@@ -1,7 +1,7 @@
 /**
  * Register your Express middlewares
  *
- * @author Mike Christopher SYLVESTRE <mike.sylvestre@lyknowledge.io>
+ * @author Léo DELPON <leo.delpon@viacesi.fr>
  */
 
 import { Application } from 'express';
@@ -21,8 +21,8 @@ class Kernel {
         // Mount Swagger documentation
         _express = Swagger.getInstance().mount(_express);
 
-        // Mount middleware formatter
-        _express = Formatter.mount(_express);
+        // // Mount middleware formatter
+        // _express = Formatter.mount(_express);
 
         return _express;
     }

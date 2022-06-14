@@ -11,23 +11,27 @@ datasource db {
 }
 
 model User {
-  email      String     @unique
-  password   String
-  phone      String     @unique
-  address    Address[]
-  createdAt  DateTime
-  updatedAt  DateTime
-  googleAuth Boolean
-  verifyUser Boolean
-  emailCode  String
-  browser    String
-  status     String
-  godFather  String
-  profilUrl  String
-  resetToken String
-  corrId     String
-  isBanned   Boolean
-  uuid       String      @id
+  email            String     @unique
+  firstname        String
+  lastname         String
+  password         String
+  phone            String     @unique
+  address          Address[]
+  createdAt        DateTime
+  updatedAt        DateTime
+  googleAuth       String     @unique
+  verifyUser       Boolean
+  emailCode        String
+  browser          String
+  status           String
+  godFather        String
+  profilUrl        String
+  accessToken      String    @unique
+  refreshToken     String    @unique
+  corrId           String    @unique
+  resetToken       String    @unique
+  isBanned         Boolean
+  uuid             String    @id
 }
 
 model Address {

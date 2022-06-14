@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
 import { ApiError } from '../../../types';
+import AuthTools from '../../../utils/auth/index';
 import Log from '../../middlewares/Log';
 
 const client = new PrismaClient();
@@ -30,9 +31,33 @@ class VerificationController {
             }
 
             if (verificationCode === user.emailCode) {
+                user.verifyUser = true;
+                user.emailCode = '';
+                await client.user.update({
+                    where: {
+                        uuid: user.uuid
+                    },
+                    data: {
+                        ...user
+                    }
+                });
+
+                const datas = {
+                    email: user.email,
+                    phone: user.phone,
+                    verifyUser: 'true',
+                    status: user.status,
+                    profilUrl: ''
+                };
+
+                const token = AuthTools.generateToken(datas);
                 return res
-                    .status(202)
-                    .json({ status: 202, message: 'Validation code matched' });
+                    .cookie('FREEZE_JWT', token, {
+                        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
+                    })
+                    .json({
+                        token
+                    });
             }
 
             return res.status(500).json({ status: 500, message: 'Error from server' });
