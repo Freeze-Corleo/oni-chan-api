@@ -30,4 +30,5 @@ export class Database {
             Log.error('Database :: Failed to connect to the Mongo server !!');
         }
     }
-}
+} 
+export default mongoose;

@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import {Product} from "./Product";
+import Product from "./schema/Product";
 
 class Restaurant{
     name:string;
@@ -8,7 +8,7 @@ class Restaurant{
     address: Address;
     price:Enumerator;
     cookType: ObjectId;
-    products: Product[];
+    //products: Product[];
     isAvailable: boolean;
     uuid: string;
 }
