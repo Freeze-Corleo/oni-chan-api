@@ -1,7 +1,6 @@
-class Address{
+interface IAddress{
     street:string;
     number:string;
     city:string;
     zipCode:string;
-    uuid:string;
-}
+} export default IAddress;

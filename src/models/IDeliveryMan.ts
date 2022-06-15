@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
 
-class DeliveryMan{
+interface IDeliveryMan{
     userId: ObjectId;
     rate: number;
     deliveryNumber: string;
     uuid: string;
-}
+} export default IDeliveryMan;

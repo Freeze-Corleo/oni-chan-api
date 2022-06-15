@@ -2,6 +2,7 @@ import mongoose, { Schema, model, connect } from 'mongoose';
 import express from 'express';
 import product from '../models/schema/Product';
 import Log from '../middlewares/Log';
+import IProduct from '../models/IProduct';
 
 class ProductController{
     /**
@@ -80,7 +81,7 @@ class ProductController{
             return res.send(JSON.stringify(createdProduct));
         } catch (error) {
             Log.error(error);
-            return res.send('Cannot create a new product');
+            return res.send('Cannot create a new product '+error);
         }
     }
 
@@ -103,5 +104,4 @@ class ProductController{
             return res.send('Cannot update a product');
         }
     }
-
 } export default ProductController;

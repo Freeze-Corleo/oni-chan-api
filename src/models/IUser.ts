@@ -1,10 +1,11 @@
 import { ObjectId } from 'mongodb';
+import IAddress from './IAddress';
 
-class User {
+interface IUser {
     email: string;
     password: string;
     phone: string;
-    address: Address;
+    address: IAddress;
     createdAt: Date;
     updatedAt: Date;
     googleAuth: boolean;
@@ -16,4 +17,4 @@ class User {
     profilUrl: string;
     isBanned: boolean;
     uuid: string;
-}
+} export default IUser;
