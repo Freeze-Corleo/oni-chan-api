@@ -78,4 +78,9 @@ router.get('/product/get', ProductController.getById);
 router.delete('/product/delete', ProductController.deleteById);
 router.put('/product/update', ProductController.updateById);
 
+router.post('/negro', function (req, res) {
+    console.log(req.body);
+    return res.send("uuuii");
+})
+
 export default router;

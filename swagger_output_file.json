@@ -201,13 +201,6 @@
         "responses": {}
       }
     },
-    "/auth/google/callback": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/status/get-monitor": {
       "get": {
         "description": "",
@@ -323,6 +316,17 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/negro": {
+      "post": {
+        "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"

@@ -74,7 +74,9 @@ class RegisterController {
             });
 
             // return id to be sent to the /auth/verify/:id/:emailCode endpoint for verification
-            return res.status(201).json({ status: 201, message: user.uuid });
+            return res
+                .status(201)
+                .json({ status: 201, payload: { uuid: user.uuid, email: user.email } });
         } catch (error) {
             if (error.code === 'P2002') {
                 // return res.status(400).json({
