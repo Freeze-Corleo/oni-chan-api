@@ -74,7 +74,8 @@ router.get(
  */
 router.post('/product/create-one', ProductController.createOne);
 router.get('/product/get-all', ProductController.getAll);
-router.get('/product/get-by-id', ProductController.getById);
-router.delete('/product/delete-by-id', ProductController.deleteById);
+router.get('/product/get', ProductController.getById);
+router.delete('/product/delete', ProductController.deleteById);
+router.put('/product/update', ProductController.updateById);
 
 export default router;
