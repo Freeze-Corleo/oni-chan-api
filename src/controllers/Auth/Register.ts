@@ -39,7 +39,7 @@ class RegisterController {
                 );
             }
 
-            const userVerify = await client.user.findFirst({ where: email });
+            const userVerify = await client.user.findFirst({ where: { email: email } });
 
             if (userVerify) {
                 return next(
