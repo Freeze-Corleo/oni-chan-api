@@ -15,7 +15,7 @@ model User {
   firstname        String
   lastname         String
   password         String
-  phone            String     @unique
+  phone            String
   address          Address[]
   createdAt        DateTime
   updatedAt        DateTime
@@ -26,10 +26,10 @@ model User {
   status           String
   godFather        String
   profilUrl        String
-  accessToken      String    @unique
-  refreshToken     String    @unique
-  corrId           String    @unique
-  resetToken       String    @unique
+  accessToken      String
+  refreshToken     String
+  corrId           String
+  resetToken       String
   isBanned         Boolean
   uuid             String    @id
 }

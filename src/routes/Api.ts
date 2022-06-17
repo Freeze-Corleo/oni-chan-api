@@ -10,7 +10,7 @@ import StatusMonitorController from '../controllers/Monitor/StatusController';
 import RegisterController from '../controllers/Auth/Register';
 import VerificationController from '../controllers/Auth/Verification';
 import LoginController from '../controllers/Auth/Login';
-import ProductController from '../controllers/ProductController'
+import ProductController from '../controllers/ProductController';
 const router = Router();
 
 /**
@@ -34,9 +34,10 @@ router.get(
         failureRedirect: '/auth/google/failed'
     })
 );
+
 router.get(
     '/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { failureRedirect: '/login', session: false }),
     (req: any, res) => {
         const datas = {
             email: req.user.email,
@@ -47,11 +48,8 @@ router.get(
         };
 
         const token = AuthTools.generateToken(datas);
-        return res
-            .cookie('FREEZE_JWT', token, {
-                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
-            })
-            .redirect('/');
+        res.cookie('JWT_TOKEN', token);
+        res.redirect(302, `http://localhost:3000/home`);
     }
 );
 
@@ -77,9 +75,10 @@ router.get('/product/get-all', ProductController.getAll);
 router.get('/product/get-by-id', ProductController.getById);
 router.delete('/product/delete-by-id', ProductController.deleteById);
 
-router.post('/negro', function (req, res) {
+router.get('/', function (req, res) {
     console.log(req.body);
-    return res.send("uuuii");
-})
+    console.log(req.session);
+    return res.send('uuuii');
+});
 
 export default router;

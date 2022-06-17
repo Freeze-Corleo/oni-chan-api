@@ -30,7 +30,7 @@ class Http {
             saveUninitialized: true,
             secret: Locals.config().appSecret,
             cookie: {
-                maxAge: 1209600000 // two weeks (in ms)
+                maxAge: 1000 * 60 * 60 * 24 // one day (in ms)
             }
         };
 
@@ -42,7 +42,7 @@ class Http {
                 limit: Locals.config().maxUploadLimit
             })
         );
-        
+
         _express.use(
             bodyParser.urlencoded({
                 limit: Locals.config().maxUploadLimit,
