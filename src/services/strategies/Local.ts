@@ -5,10 +5,7 @@
  */
 
 import { Strategy } from 'passport-local';
-import { PrismaClient } from '@prisma/client';
 import Log from '../../middlewares/Log';
-
-const client = new PrismaClient();
 
 class Local {
     public static init(_passport: any): any {

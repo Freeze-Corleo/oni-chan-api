@@ -19,17 +19,17 @@ model User {
   address          Address[]
   createdAt        DateTime
   updatedAt        DateTime
-  googleAuth       String     @unique
+  googleAuth       String?     @unique
   verifyUser       Boolean
   emailCode        String
   browser          String
   status           String
   godFather        String
   profilUrl        String
-  accessToken      String
-  refreshToken     String
-  corrId           String
-  resetToken       String
+  accessToken      String?    @unique
+  refreshToken     String?    @unique
+  corrId           String?    @unique
+  resetToken       String?    @unique
   isBanned         Boolean
   uuid             String    @id
 }
