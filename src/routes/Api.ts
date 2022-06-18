@@ -10,7 +10,9 @@ import StatusMonitorController from '../controllers/Monitor/StatusController';
 import RegisterController from '../controllers/Auth/Register';
 import VerificationController from '../controllers/Auth/Verification';
 import LoginController from '../controllers/Auth/Login';
-import ProductController from '../controllers/ProductController'
+import ProductController from '../controllers/Product/ProductController'
+import CategoryProductController from '../controllers/Product/CategoryProductController';
+import AllergyController from '../controllers/Product/AllergyController';
 const router = Router();
 
 /**
@@ -72,10 +74,29 @@ router.get(
 /**
  * Products endpoints
  */
-router.post('/product/create-one', ProductController.createOne);
-router.get('/product/get-all', ProductController.getAll);
-router.get('/product/get', ProductController.getById);
-router.delete('/product/delete', ProductController.deleteById);
-router.put('/product/update', ProductController.updateById);
+router.post('/product/create', ProductController.requestCreateOne);
+router.get('/product/get-all', ProductController.requestGetAll);
+router.get('/product/get', ProductController.requestGetById);
+router.delete('/product/delete', ProductController.requestDeleteById);
+router.put('/product/update', ProductController.requestUpdateById);
+
+/**
+ * Category products endpoints
+ */
+router.post('/category-product/create', CategoryProductController.requestCreateOne);
+router.get('/category-product/get-all', CategoryProductController.requestGetAll);
+router.get('/category-product/get', CategoryProductController.requestGetById);
+router.delete('/category-product/delete', CategoryProductController.requestDeleteById);
+router.put('/category-product/update', CategoryProductController.requestUpdateById);
+
+/**
+ * Allergy products endpoints
+ */
+router.post('/allergy/create', AllergyController.requestCreateOne);
+router.get('/allergy/get-all', AllergyController.requestGetAll);
+router.get('/allergy/get', AllergyController.requestGetById);
+router.delete('/allergy/delete', AllergyController.requestDeleteById);
+router.put('/allergy/update', AllergyController.requestUpdateById);
+
 
 export default router;

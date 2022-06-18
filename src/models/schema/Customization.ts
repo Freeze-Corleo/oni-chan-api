@@ -12,5 +12,3 @@ export const customizationSchema = new mongoose.Schema({
 });
 
 export default mongoose.model<ICustomization>('customization', customizationSchema);
-
-

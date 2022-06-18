@@ -1,13 +1,13 @@
 import ICustomization from './ICustomization';
-import IAllergic from './IAllergic';
+import IAllergy from './IAllergy';
 import { ObjectId } from 'bson';
 
 interface IProduct {
     title: String;
     price: Number;
     itemDescription: String;
-    category: ObjectId;
+    category: ObjectId; //soit un objt id soit un nom et donc on le creer
     imageUrl: String;
     customizationsList: ICustomization[];
-    alleric: IAllergic[];
+    alleric: IAllergy[];
 } export default IProduct;
