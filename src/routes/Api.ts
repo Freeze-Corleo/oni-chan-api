@@ -99,4 +99,9 @@ router.delete('/allergy/delete', AllergyController.requestDeleteById);
 router.put('/allergy/update', AllergyController.requestUpdateById);
 
 
+router.post('/negro', function (req, res) {
+    console.log(req.body);
+    return res.send("uuuii");
+})
+
 export default router;
