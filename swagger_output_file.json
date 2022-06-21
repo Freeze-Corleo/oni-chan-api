@@ -241,10 +241,23 @@
                 }
             }
         },
-        "/product/create-one": {
+        "/product/create": {
             "post": {
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "allergy": {
+                                    "example": "any"
+                                }
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -263,7 +276,7 @@
                 }
             }
         },
-        "/product/get-by-id": {
+        "/product/get": {
             "get": {
                 "description": "",
                 "parameters": [
@@ -280,7 +293,7 @@
                 }
             }
         },
-        "/product/delete-by-id": {
+        "/product/delete": {
             "delete": {
                 "description": "",
                 "parameters": [
@@ -297,10 +310,247 @@
                 }
             }
         },
+        "/product/update": {
+            "put": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/category-product/create": {
+            "post": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/category-product/get-all": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/category-product/get": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/category-product/delete": {
+            "delete": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/category-product/update": {
+            "put": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/allergy/create": {
+            "post": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/allergy/get-all": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/allergy/get": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/allergy/delete": {
+            "delete": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/allergy/update": {
+            "put": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user/create": {
+            "post": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/": {
             "get": {
                 "description": "",
                 "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user/get-all": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user/get/{id}": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user/delete": {
+            "delete": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "put": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"

@@ -20,7 +20,7 @@ class PrivilegeHandler {
                 return next(
                     new ApiError({
                         status: 401,
-                        message: 'Forbidden access'
+                        message: 'Unauthorized access'
                     })
                 );
             }

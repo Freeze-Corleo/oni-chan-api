@@ -26,7 +26,7 @@ class VerificationController {
             });
 
             if (!user) {
-                Log.error('Route :: [/auth/verify] user already exist');
+                Log.error('Route :: [/auth/verify] user not found');
                 return next(new ApiError({ status: 404, message: 'User not found' }));
             }
 

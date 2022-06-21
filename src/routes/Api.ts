@@ -10,10 +10,10 @@ import StatusMonitorController from '../controllers/Monitor/StatusController';
 import RegisterController from '../controllers/Auth/Register';
 import VerificationController from '../controllers/Auth/Verification';
 import LoginController from '../controllers/Auth/Login';
-import ProductController from '../controllers/Product/ProductController'
+import ProductController from '../controllers/Product/ProductController';
 import CategoryProductController from '../controllers/Product/CategoryProductController';
 import AllergyController from '../controllers/Product/AllergyController';
-import UserController from '../controllers/UserController';
+import UserController from '../controllers/User/UserController';
 
 const router = Router();
 
@@ -109,8 +109,8 @@ router.get('/', function (req, res) {
 });
 
 router.get('/user/get-all', UserController.requestGetAll);
-router.get('/user/get', UserController.requestGetById);
+router.get('/user/get/:id', UserController.getById);
 router.delete('/user/delete', UserController.requestDeleteById);
 router.put('/user/update', UserController.requestUpdateById);
- 
+
 export default router;
