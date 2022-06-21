@@ -60,7 +60,8 @@ class LoginController {
                 phone: user.phone,
                 verifyUser: 'false',
                 status: user.status,
-                profilUrl: ''
+                profilUrl: '',
+                uuid: user.uuid
             };
 
             const token = AuthTools.generateToken(datas);

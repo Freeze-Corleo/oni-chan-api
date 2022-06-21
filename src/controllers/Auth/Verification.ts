@@ -47,7 +47,8 @@ class VerificationController {
                     phone: user.phone,
                     verifyUser: 'true',
                     status: user.status,
-                    profilUrl: ''
+                    profilUrl: '',
+                    uuid: user.uuid
                 };
 
                 const token = AuthTools.generateToken(datas);
