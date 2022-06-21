@@ -3,6 +3,8 @@ import IAddress from './IAddress';
 
 interface IUser {
     email: string;
+    firstname: string;
+    lastname: string;
     password: string;
     phone: string;
     address: IAddress;
@@ -15,6 +17,10 @@ interface IUser {
     status: Status;
     godFather: ObjectId;
     profilUrl: string;
+    accessToken: string;
+    refreshToken: string;
+    corrId: string;
+    resetToken: string;
     isBanned: boolean;
     uuid: string;
 } export default IUser;

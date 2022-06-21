@@ -13,6 +13,8 @@ import LoginController from '../controllers/Auth/Login';
 import ProductController from '../controllers/Product/ProductController'
 import CategoryProductController from '../controllers/Product/CategoryProductController';
 import AllergyController from '../controllers/Product/AllergyController';
+import UserController from '../controllers/UserController';
+
 const router = Router();
 
 /**
@@ -98,10 +100,14 @@ router.get('/allergy/get', AllergyController.requestGetById);
 router.delete('/allergy/delete', AllergyController.requestDeleteById);
 router.put('/allergy/update', AllergyController.requestUpdateById);
 
+/**
+ * User endpoints
+ */
+router.post('/user/create', UserController.requestCreateOne);
 
-router.post('/negro', function (req, res) {
-    console.log(req.body);
-    return res.send("uuuii");
-})
-
+router.get('/user/get-all', UserController.requestGetAll);
+router.get('/user/get', UserController.requestGetById);
+router.delete('/user/delete', UserController.requestDeleteById);
+router.put('/user/update', UserController.requestUpdateById);
+ 
 export default router;
