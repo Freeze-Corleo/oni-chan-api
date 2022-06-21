@@ -38,9 +38,10 @@ router.get(
         failureRedirect: '/auth/google/failed'
     })
 );
+
 router.get(
     '/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { failureRedirect: '/login', session: false }),
     (req: any, res) => {
         const datas = {
             email: req.user.email,
@@ -51,11 +52,8 @@ router.get(
         };
 
         const token = AuthTools.generateToken(datas);
-        return res
-            .cookie('FREEZE_JWT', token, {
-                expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
-            })
-            .redirect('/');
+        res.cookie('JWT_TOKEN', token);
+        res.redirect(302, `http://localhost:3000/home`);
     }
 );
 

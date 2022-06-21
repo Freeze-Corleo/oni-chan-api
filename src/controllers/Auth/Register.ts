@@ -39,6 +39,17 @@ class RegisterController {
                 );
             }
 
+            const userVerify = await client.user.findFirst({ where: { email: email } });
+
+            if (userVerify) {
+                return next(
+                    new ApiError({
+                        status: 400,
+                        message: 'A user already exist'
+                    })
+                );
+            }
+
             user = await client.user.create({
                 data: {
                     email,
@@ -56,7 +67,6 @@ class RegisterController {
                     lastname: '',
                     createdAt: new Date(Date.now()),
                     updatedAt: new Date(Date.now()),
-                    googleAuth: '',
                     verifyUser: false,
                     emailCode: '',
                     browser: req.headers['user-agent'],
@@ -64,10 +74,6 @@ class RegisterController {
                     godFather: '',
                     profilUrl: '',
                     isBanned: false,
-                    resetToken: '',
-                    corrId: '',
-                    accessToken: '',
-                    refreshToken: '',
                     uuid: AuthTools.uuiGenerator(),
                     password: AuthTools.hashPassword(password)
                 }
@@ -78,6 +84,7 @@ class RegisterController {
                 .status(201)
                 .json({ status: 201, payload: { uuid: user.uuid, email: user.email } });
         } catch (error) {
+            console.log(error);
             if (error.code === 'P2002') {
                 // return res.status(400).json({
                 //     message: 'User already exists',
@@ -85,7 +92,7 @@ class RegisterController {
                 return next(
                     new ApiError({
                         status: 400,
-                        message: 'User already exists'
+                        message: 'Error due to constraint key politic unrespected'
                     })
                 );
             }

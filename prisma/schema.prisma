@@ -15,21 +15,21 @@ model User {
   firstname        String
   lastname         String
   password         String
-  phone            String     @unique
-  address          Address[] 
+  phone            String
+  address          Address[]
   createdAt        DateTime
   updatedAt        DateTime
-  googleAuth       String     @unique
+  googleAuth       String?     @unique
   verifyUser       Boolean
   emailCode        String
   browser          String
   status           String
   godFather        String
   profilUrl        String
-  accessToken      String    @unique
-  refreshToken     String    @unique
-  corrId           String    @unique
-  resetToken       String    @unique
+  accessToken      String?    @unique
+  refreshToken     String?    @unique
+  corrId           String?    @unique
+  resetToken       String?    @unique
   isBanned         Boolean
   uuid             String    @id
 }
