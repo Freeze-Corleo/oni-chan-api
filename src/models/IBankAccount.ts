@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
 
-class BankAccount{
+interface IBankAccount{
     amount: number;
     uuid: string;
     deliveryManId: ObjectId;
     restaurantId: ObjectId;
-}
+} export default IBankAccount;

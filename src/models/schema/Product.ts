@@ -1,17 +1,19 @@
 import mongoose from '../../providers/Database';
 import IProduct from '../IProduct';
+import { Schema } from 'mongoose';
+import { customizationSchema } from './Customization';
+import { allergySchema } from './Allergy';
 
 export const productSchema = new mongoose.Schema({
     title: String,
     price: Number,
     itemDescription: String,
-    //category: ObjectId;
+    category: Schema.Types.ObjectId,
     imageUrl: String,
-    //customizationsList: Customization[];
-    //allergic: Allergic[];
-    uuid: String
+    customizationsList: [customizationSchema],
+    allergy: [allergySchema]
 });
 
-export default mongoose.model<IProduct>('Product', productSchema);
+export default mongoose.model<IProduct>('product', productSchema);
 
 

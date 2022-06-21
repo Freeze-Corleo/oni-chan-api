@@ -1,15 +1,16 @@
 import { ObjectId } from "mongodb";
 import Product from "./schema/Product";
+import IAddress from './IAddress'
+import IProduct from './IProduct'
 
-class Restaurant{
+interface IRestaurant{
     name:string;
     rate:number;
     deliveryPrice:number;
-    address: Address;
+    address: IAddress;
     price:Enumerator;
     cookType: ObjectId;
-    //products: Product[];
+    products: IProduct[];
     isAvailable: boolean;
     uuid: string;
-}
-export {Restaurant}
+} export default IRestaurant;
