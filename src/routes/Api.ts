@@ -102,6 +102,11 @@ router.put('/allergy/update', AllergyController.requestUpdateById);
  * User endpoints
  */
 router.post('/user/create', UserController.requestCreateOne);
+router.get('/', function (req, res) {
+    console.log(req.body);
+    console.log(req.session);
+    return res.send('uuuii');
+});
 
 router.get('/user/get-all', UserController.requestGetAll);
 router.get('/user/get', UserController.requestGetById);
