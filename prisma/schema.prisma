@@ -39,7 +39,7 @@ model Address {
   number  String
   city    String
   zipCode String
-  uuid    String @id
-  User    User   @relation(fields: [userId], references: [uuid])
-  userId  String
+  uuid    String  @id
+  User    User?   @relation(fields: [userId], references: [uuid])
+  userId  String?
 }

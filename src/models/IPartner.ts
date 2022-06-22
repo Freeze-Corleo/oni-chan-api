@@ -1,15 +1,21 @@
-import { ObjectId } from "mongodb";
-import IRestaurant from "./IRestaurant";
+import { ObjectId } from 'mongodb';
+import IRestaurant from './IRestaurant';
 import IAddress from './IAddress';
 
 interface IPartner {
-    name:string;
-    address:IAddress;
-    siren:string;
-    activity:string;
-    firstname:string;
-    lastname:TimeRanges;
-    userId:ObjectId;
+    name: string;
+    address: string;
+    siren: string;
+    activity: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    userId: string;
+    createdAt: Date | null;
+    updatedAt: Date | null;
     restaurants: IRestaurant[];
-    uuid:string;
-} export default IPartner;
+    uuid: string;
+    status: string;
+}
+export default IPartner;

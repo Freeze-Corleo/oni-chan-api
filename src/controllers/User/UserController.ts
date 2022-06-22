@@ -26,10 +26,6 @@ class UserController {
         return res.send(await UserController.createOne(req.body));
     }
 
-    public static async requestUpdateById(req: express.Request, res: express.Response) {
-        return res.send(await UserController.updateById(String(req.query.id), req.body));
-    }
-
     private static async getAll() {
         try {
             const allUsers = await prisma.user.findMany();
@@ -54,6 +50,7 @@ class UserController {
                 select: {
                     email: true,
                     firstname: true,
+                    lastname: true,
                     phone: true,
                     address: true,
                     createdAt: true,
@@ -95,22 +92,59 @@ class UserController {
         }
     }
 
-    private static async updateById(id: string, updatedUser: IUser) {
+    public static async updateById(req: Request, res: Response, next: NextFunction) {
+        const userId = req.params.id;
+        const data = req.body;
         try {
+            const user = await prisma.user.findFirst({
+                where: { uuid: userId },
+                include: { address: true }
+            });
+
+            if (!user) {
+                Log.error('Route :: [/user/update/:id] user not found');
+                return next(new ApiError({ status: 404, message: 'User not found' }));
+            }
+
+            user.email = data.email;
+            user.firstname = data.firstname;
+            user.lastname = data.lastname;
+            user.phone = data.phone;
+            user.address = data.address;
+            user.updatedAt = new Date(Date.now());
+            user.googleAuth = data.googleAuth;
+            user.verifyUser = data.verifyUser;
+            user.godFather = data.godFather;
+            user.profilUrl = data.profilUrl;
+            user.isBanned = data.isBanned;
+
+            const addrListId = user.address.map((addr) => ({ uuid: addr.uuid }));
+
+            const addresses = [...addrListId];
+
             const updateUser = await prisma.user.update({
                 where: {
-                    uuid: id
+                    uuid: userId
                 },
-                data: {}
+                data: {
+                    ...user,
+                    address: {
+                        set: addresses.map((addr) => ({ ...addr }))
+                    }
+                },
+                include: {
+                    address: true
+                }
             });
 
             if (!updateUser) {
-                throw new Error('No document found');
+                Log.error('Route :: [/user/update/:id] user not found');
+                return next(new ApiError({ status: 404, message: 'User not found' }));
             }
-            return JSON.stringify(updateUser);
+            return res.status(200).json(updateUser);
         } catch (error) {
-            Log.error(error);
-            return JSON.stringify('Cannot update a category product');
+            Log.error(`Route :: [/user/get/:id] server error: ${error}`);
+            return next(new ApiError({ status: 500, message: 'Error from server' }));
         }
     }
 

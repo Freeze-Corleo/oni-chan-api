@@ -5,12 +5,10 @@
  */
 
 import mongoose from 'mongoose';
-import mysql from 'mysql';
 import { MongoError } from 'mongodb';
 
 import Locals from './Local';
 import Log from '../middlewares/Log';
-import { clearConfigCache } from 'prettier';
 
 export class Database {
     public static init(): any {
@@ -30,5 +28,5 @@ export class Database {
             Log.error('Database :: Failed to connect to the Mongo server !!');
         }
     }
-} 
+}
 export default mongoose;

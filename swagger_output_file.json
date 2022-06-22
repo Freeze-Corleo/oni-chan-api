@@ -541,19 +541,113 @@
                 }
             }
         },
-        "/user/update": {
+        "/user/update/{id}": {
             "put": {
                 "description": "",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
+                        "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "example": "any"
+                                },
+                                "firstname": {
+                                    "example": "any"
+                                },
+                                "lastname": {
+                                    "example": "any"
+                                },
+                                "phone": {
+                                    "example": "any"
+                                },
+                                "address": {
+                                    "example": "any"
+                                },
+                                "googleAuth": {
+                                    "example": "any"
+                                },
+                                "verifyUser": {
+                                    "example": "any"
+                                },
+                                "godFather": {
+                                    "example": "any"
+                                },
+                                "profilUrl": {
+                                    "example": "any"
+                                },
+                                "isBanned": {
+                                    "example": "any"
+                                }
+                            }
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK"
+                    }
+                }
+            }
+        },
+        "/partner/create": {
+            "post": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "example": "any"
+                                },
+                                "siren": {
+                                    "example": "any"
+                                },
+                                "address": {
+                                    "example": "any"
+                                },
+                                "zipCode": {
+                                    "example": "any"
+                                },
+                                "city": {
+                                    "example": "any"
+                                },
+                                "activity": {
+                                    "example": "any"
+                                },
+                                "firstname": {
+                                    "example": "any"
+                                },
+                                "lastname": {
+                                    "example": "any"
+                                },
+                                "email": {
+                                    "example": "any"
+                                },
+                                "phone": {
+                                    "example": "any"
+                                },
+                                "status": {
+                                    "example": "any"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
                     }
                 }
             }

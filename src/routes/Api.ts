@@ -15,6 +15,8 @@ import CategoryProductController from '../controllers/Product/CategoryProductCon
 import AllergyController from '../controllers/Product/AllergyController';
 import UserController from '../controllers/User/UserController';
 
+import ApplyPartnerController from '../controllers/Partner/ApplyPartnerController';
+
 const router = Router();
 
 /**
@@ -111,6 +113,11 @@ router.get('/', function (req, res) {
 router.get('/user/get-all', UserController.requestGetAll);
 router.get('/user/get/:id', UserController.getById);
 router.delete('/user/delete', UserController.requestDeleteById);
-router.put('/user/update', UserController.requestUpdateById);
+router.put('/user/update/:id', UserController.updateById);
+
+/**
+ * Partner endpoints
+ */
+router.post('/partner/create', ApplyPartnerController.perform);
 
 export default router;
