@@ -79,6 +79,6 @@ export const PartnerSchema = new mongoose.Schema({
     }
 });
 
-const Partner = mongoose.model<IPartner>('Sprint', PartnerSchema);
+const Partner = mongoose.model<IPartner>('Partner', PartnerSchema);
 
 export default Partner;

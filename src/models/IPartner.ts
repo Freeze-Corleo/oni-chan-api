@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongodb';
 import IRestaurant from './IRestaurant';
-import IAddress from './IAddress';
 
 interface IPartner {
     name: string;
@@ -17,5 +16,6 @@ interface IPartner {
     restaurants: IRestaurant[];
     uuid: string;
     status: string;
+    _id: ObjectId;
 }
 export default IPartner;

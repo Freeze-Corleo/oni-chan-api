@@ -16,6 +16,7 @@ import AllergyController from '../controllers/Product/AllergyController';
 import UserController from '../controllers/User/UserController';
 
 import ApplyPartnerController from '../controllers/Partner/ApplyPartnerController';
+import GetAllPartnersController from '../controllers/Partner/GetAllPartnersController';
 
 const router = Router();
 
@@ -119,5 +120,6 @@ router.put('/user/update/:id', UserController.updateById);
  * Partner endpoints
  */
 router.post('/partner/create', ApplyPartnerController.perform);
+router.get('/partner/get-all', GetAllPartnersController.perform);
 
 export default router;

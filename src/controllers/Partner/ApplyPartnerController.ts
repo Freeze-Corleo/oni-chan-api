@@ -58,7 +58,7 @@ class ApplyPartnerController {
             });
 
             if (addr.length > 0) {
-                Log.error('Route :: [/user/get/:id] address already in database');
+                Log.error('Route :: [/partner/create] address already in database');
                 return next(
                     new ApiError({ status: 409, message: 'Address already existing' })
                 );
@@ -91,7 +91,7 @@ class ApplyPartnerController {
 
             return res.status(201).json(partnerSaved);
         } catch (err) {
-            Log.error(`Route :: [/auth/verify] server error: ${err}`);
+            Log.error(`Route :: [/partner/create] server error: ${err}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));
         }
     }
