@@ -18,6 +18,7 @@ import UserController from '../controllers/User/UserController';
 import ApplyPartnerController from '../controllers/Partner/ApplyPartnerController';
 import GetAllPartnersController from '../controllers/Partner/GetAllPartnersController';
 import VerifyPartnerController from '../controllers/Partner/ValidatePartnerController';
+import RestaurantController from '../controllers/Restaurant/RestaurantController';
 
 const router = Router();
 
@@ -83,6 +84,12 @@ router.get('/product/get-all', ProductController.requestGetAll);
 router.get('/product/get', ProductController.requestGetById);
 router.delete('/product/delete', ProductController.requestDeleteById);
 router.put('/product/update', ProductController.requestUpdateById);
+
+/**
+ * Restaurant endpoints
+ */
+router.get('/restaurant/get-all', RestaurantController.requestGetAll);
+router.post('/restaurant/create', RestaurantController.requestCreateOne);
 
 /**
  * Category products endpoints

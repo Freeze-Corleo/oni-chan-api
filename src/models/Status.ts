@@ -1,4 +1,4 @@
-enum Status {
+export enum Status {
     'RESTORER',
     'CLIENT',
     'DELIVERY_MAN'
