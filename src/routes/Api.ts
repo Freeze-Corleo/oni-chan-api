@@ -90,6 +90,9 @@ router.put('/product/update', ProductController.requestUpdateById);
  */
 router.get('/restaurant/get-all', RestaurantController.requestGetAll);
 router.post('/restaurant/create', RestaurantController.requestCreateOne);
+router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
+router.delete('/restaurant/delete', RestaurantController.requestDeleteById);
+router.put('/restaurant/update', RestaurantController.requestUpdateById);
 
 /**
  * Category products endpoints
