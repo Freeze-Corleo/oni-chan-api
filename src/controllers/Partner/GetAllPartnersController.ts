@@ -64,7 +64,7 @@ class GetAllPartnersController {
             createdAt: partner.createdAt,
             updatedAt: partner.updatedAt,
             restaurants: partner.restaurants,
-            _id: partner._id,
+            id: partner._id,
             status: partner.status
         };
         return partnerDTO;

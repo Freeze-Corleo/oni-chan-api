@@ -17,6 +17,7 @@ import UserController from '../controllers/User/UserController';
 
 import ApplyPartnerController from '../controllers/Partner/ApplyPartnerController';
 import GetAllPartnersController from '../controllers/Partner/GetAllPartnersController';
+import VerifyPartnerController from '../controllers/Partner/ValidatePartnerController';
 
 const router = Router();
 
@@ -121,5 +122,6 @@ router.put('/user/update/:id', UserController.updateById);
  */
 router.post('/partner/create', ApplyPartnerController.perform);
 router.get('/partner/get-all', GetAllPartnersController.perform);
+router.post('/partner/verify/:id', VerifyPartnerController.perform);
 
 export default router;
