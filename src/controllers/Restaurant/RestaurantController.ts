@@ -18,12 +18,19 @@ class RestaurantController {
         return res.send(await RestaurantController.createOne(req.body));
     }
 
-    public static async requestProductGetByRestaurantId(req: express.Request, res: express.Response) {
-        return res.send(await RestaurantController.getProductByRestaurantId(String(req.query.id)));
+    public static async requestProductGetByRestaurantId(
+        req: express.Request,
+        res: express.Response
+    ) {
+        return res.send(
+            await RestaurantController.getProductByRestaurantId(String(req.query.id))
+        );
     }
 
-    public static async requestUpdateById(req: express.Request, res: express.Response){
-        return res.send(await RestaurantController.updateById(String(req.query.id), req.body));
+    public static async requestUpdateById(req: express.Request, res: express.Response) {
+        return res.send(
+            await RestaurantController.updateById(String(req.query.id), req.body)
+        );
     }
 
     private static async getAll() {
@@ -45,7 +52,7 @@ class RestaurantController {
             if (!restaurantWanted) {
                 throw new Error('No document found');
             }
-            return JSON.stringify(restaurantWanted.products);
+            return JSON.stringify(restaurantWanted);
         } catch (error) {
             Log.error(error);
             return JSON.stringify('No restaurant found');
@@ -55,8 +62,8 @@ class RestaurantController {
     private static async deleteById(id: string) {
         try {
             const restaurantFound = await restaurant.deleteOne({ _id: id });
-            if(!restaurantFound) {
-              throw new Error('No document found');
+            if (!restaurantFound) {
+                throw new Error('No document found');
             }
             return JSON.stringify(restaurantFound);
         } catch (error) {
@@ -67,9 +74,12 @@ class RestaurantController {
 
     public static async updateById(id: string, restaurantWanted: IRestaurant) {
         try {
-            const updatableRestaurant = await restaurant.findOneAndUpdate({_id: id}, restaurantWanted);
-            if(!updatableRestaurant) {
-              throw new Error('No document found');
+            const updatableRestaurant = await restaurant.findOneAndUpdate(
+                { _id: id },
+                restaurantWanted
+            );
+            if (!updatableRestaurant) {
+                throw new Error('No document found');
             }
             return JSON.stringify(updatableRestaurant);
         } catch (error) {
