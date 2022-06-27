@@ -5,6 +5,9 @@ export const categoryProductSchema = new mongoose.Schema({
     title: String
 });
 
-export default mongoose.model<ICategory>('categoryproduct', categoryProductSchema);
+const CategoryRestaurant = mongoose.model<ICategory>(
+    'CategoryRestaurant',
+    categoryProductSchema
+);
 
-
+export default CategoryRestaurant;

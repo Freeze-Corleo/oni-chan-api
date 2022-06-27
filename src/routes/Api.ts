@@ -20,6 +20,8 @@ import GetAllPartnersController from '../controllers/Partner/GetAllPartnersContr
 import VerifyPartnerController from '../controllers/Partner/ValidatePartnerController';
 import RestaurantController from '../controllers/Restaurant/RestaurantController';
 
+import CreatePaymentController from '../controllers/Payment/CreatePayment';
+
 const router = Router();
 
 /**
@@ -88,11 +90,15 @@ router.put('/product/update', ProductController.requestUpdateById);
 /**
  * Restaurant endpoints
  */
-router.get('/restaurant/get-all', RestaurantController.requestGetAll);
-router.post('/restaurant/create', RestaurantController.requestCreateOne);
-router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
-router.delete('/restaurant/delete', RestaurantController.requestDeleteById);
-router.put('/restaurant/update', RestaurantController.requestUpdateById);
+// router.get('/restaurant/get-all', RestaurantController.requestGetAll);
+router.post('/restaurant/create/:id', RestaurantController.createRestaurant);
+router.get(
+    '/restaurant/get-all/partner/:id',
+    RestaurantController.getRestaurantsByPartner
+);
+// router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
+// router.delete('/restaurant/delete', RestaurantController.requestDeleteById);
+// router.put('/restaurant/update', RestaurantController.requestUpdateById);
 
 /**
  * Category products endpoints
@@ -133,5 +139,10 @@ router.put('/user/update/:id', UserController.updateById);
 router.post('/partner/create', ApplyPartnerController.perform);
 router.get('/partner/get-all', GetAllPartnersController.perform);
 router.post('/partner/verify/:id', VerifyPartnerController.perform);
+
+/**
+ * Stripe payment endpoints
+ */
+router.post('/payment/payment-intent/:userId', CreatePaymentController.perform);
 
 export default router;

@@ -1,18 +1,19 @@
 import mongoose from '../../providers/Database';
 import { Schema } from 'mongoose';
-import { productSchema } from './Product';
+import { ProductSchema } from './Product';
 import IRestaurant from '../IRestaurant';
 
 export const restaurantSchema = new mongoose.Schema({
-    name: String,
-    rate: Number,
-    deliveryPrice: Number,
+    name: { trim: true, type: String },
+    rate: { type: Number },
+    deliveryPrice: { type: Number },
     address: String,
-    price: Number,
-    cookType: Schema.Types.ObjectId,
-    products: [productSchema],
-    isAvailable: Boolean,
-    uuid: String
+    price: { type: Number },
+    cookType: { trim: true, type: String },
+    products: [ProductSchema],
+    isAvailable: { type: Boolean }
 });
 
-export default mongoose.model<IRestaurant>('restaurant', restaurantSchema);
+export const Restaurant = mongoose.model<IRestaurant>('Restaurant', restaurantSchema);
+
+export default Restaurant;

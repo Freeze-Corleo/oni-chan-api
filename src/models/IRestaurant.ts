@@ -7,11 +7,11 @@ interface IRestaurant {
     name: string;
     rate: number;
     deliveryPrice: number;
-    address: IAddress;
-    price: Number;
-    cookType: ObjectId;
+    address: string;
+    price: number;
+    cookType: string;
     products: IProduct[];
     isAvailable: boolean;
-    uuid: string;
+    _id: string;
 }
 export default IRestaurant;

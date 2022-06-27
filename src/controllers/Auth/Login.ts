@@ -31,7 +31,9 @@ class LoginController {
                     phone: true,
                     status: true,
                     verifyUser: true,
-                    profilUrl: true
+                    profilUrl: true,
+                    firstname: true,
+                    lastname: true
                 }
             });
 
@@ -60,7 +62,9 @@ class LoginController {
                 phone: user.phone,
                 verifyUser: 'false',
                 status: user.status,
-                profilUrl: '',
+                profilUrl: user.profilUrl,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 uuid: user.uuid
             };
 

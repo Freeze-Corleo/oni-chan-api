@@ -1,19 +1,18 @@
 import mongoose from '../../providers/Database';
 import IProduct from '../IProduct';
 import { Schema } from 'mongoose';
-import { customizationSchema } from './Customization';
-import { allergySchema } from './Allergy';
 
-export const productSchema = new mongoose.Schema({
-    title: String,
-    price: Number,
-    itemDescription: String,
-    category: Schema.Types.ObjectId,
-    imageUrl: String,
-    customizationsList: [customizationSchema],
-    allergy: [allergySchema]
+export const ProductSchema = new mongoose.Schema({
+    title: { trim: true, type: String, required: true, lowercase: true },
+    price: { type: Number, required: true },
+    itemDescription: { type: String, required: true, lowercase: true },
+    category: { type: Schema.Types.ObjectId, ref: 'Category' },
+    imageUrl: { type: String },
+    productId: { type: String },
+    customizationsList: { type: [Schema.Types.ObjectId], ref: 'Customization' },
+    allergy: { type: [Schema.Types.ObjectId], ref: 'Allergy' }
 });
 
-export default mongoose.model<IProduct>('product', productSchema);
+const Product = mongoose.model<IProduct>('Product', ProductSchema);
 
-
+export default Product;

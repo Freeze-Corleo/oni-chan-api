@@ -1,104 +1,139 @@
 import express, { Request, Response, NextFunction } from 'express';
 import Log from '../../middlewares/Log';
-
+import { PrismaClient } from '@prisma/client';
 import { ApiError } from '../../../types';
 import IRestaurant from '../../models/IRestaurant';
-import restaurant from '../../models/schema/Restaurant';
+import IAddress from '../../models/IAddress';
 
+import AuthTools from '../../../utils/auth';
+
+import Restaurant from '../../models/schema/Restaurant';
+import Partner from '../../models/schema/Partner';
+
+const prisma = new PrismaClient();
 class RestaurantController {
-    public static async requestGetAll(req: express.Request, res: express.Response) {
-        return res.send(await RestaurantController.getAll());
-    }
-
-    public static async requestDeleteById(req: express.Request, res: express.Response) {
-        return res.send(await RestaurantController.deleteById(String(req.query.id)));
-    }
-
-    public static async requestCreateOne(req: express.Request, res: express.Response) {
-        return res.send(await RestaurantController.createOne(req.body));
-    }
-
-    public static async requestProductGetByRestaurantId(
-        req: express.Request,
-        res: express.Response
+    public static async getRestaurantsByPartner(
+        req: Request,
+        res: Response,
+        next: NextFunction
     ) {
-        return res.send(
-            await RestaurantController.getProductByRestaurantId(String(req.query.id))
-        );
-    }
-
-    public static async requestUpdateById(req: express.Request, res: express.Response) {
-        return res.send(
-            await RestaurantController.updateById(String(req.query.id), req.body)
-        );
-    }
-
-    private static async getAll() {
+        const restaurants = [];
+        const userId = req.params.id;
         try {
-            const allRestaurants = await restaurant.find({}).exec();
-            if (!allRestaurants) {
-                throw new Error('No document found');
+            const userPartner = await prisma.user.findUnique({ where: { uuid: userId } });
+            const partner = await Partner.findOne({ userId: userPartner.uuid }).populate({
+                path: 'restaurants'
+            });
+            if (!partner) {
+                Log.error(
+                    'Route :: [/restaurant/get-all/partner/:id] there is not partner'
+                );
+                return next(new ApiError({ status: 404, message: 'No partner found' }));
             }
-            return JSON.stringify(allRestaurants);
-        } catch (error) {
-            Log.error(error);
-            return JSON.stringify('No restaurant found');
-        }
-    }
-
-    public static async getProductByRestaurantId(id: string) {
-        try {
-            const restaurantWanted = await restaurant.findOne({ _id: id }).exec();
-            if (!restaurantWanted) {
-                throw new Error('No document found');
+            const restaurantLength = partner.restaurants.length;
+            for (let i = 0; i < restaurantLength; ++i) {
+                const addr = await prisma.address.findFirst({
+                    where: { uuid: partner.restaurants[i].address }
+                });
+                const data = RestaurantController.toDto(partner.restaurants[i], addr);
+                restaurants.push(data);
             }
-            return JSON.stringify(restaurantWanted);
-        } catch (error) {
-            Log.error(error);
-            return JSON.stringify('No restaurant found');
-        }
-    }
 
-    private static async deleteById(id: string) {
-        try {
-            const restaurantFound = await restaurant.deleteOne({ _id: id });
-            if (!restaurantFound) {
-                throw new Error('No document found');
-            }
-            return JSON.stringify(restaurantFound);
+            return res.status(200).json(restaurants);
         } catch (error) {
-            Log.error(error);
-            return JSON.stringify('Cannot delete restaurant');
-        }
-    }
-
-    public static async updateById(id: string, restaurantWanted: IRestaurant) {
-        try {
-            const updatableRestaurant = await restaurant.findOneAndUpdate(
-                { _id: id },
-                restaurantWanted
+            Log.error('Route :: [/restaurant/get-all/partner/:id:' + error);
+            return next(
+                new ApiError({
+                    status: 500,
+                    message: 'Could retrieve restaurants from specific partner'
+                })
             );
-            if (!updatableRestaurant) {
-                throw new Error('No document found');
-            }
-            return JSON.stringify(updatableRestaurant);
-        } catch (error) {
-            Log.error(error);
-            return JSON.stringify('Cannot update a restaurant');
         }
     }
 
-    private static async createOne(restaurantWanted: IRestaurant) {
-        try {
-            const createdRestaurant = await new restaurant(restaurantWanted).save();
-            if (!createdRestaurant) {
-                throw new Error('No document found');
+    public static async createRestaurant(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const userId = req.params.id;
+        const { restaurant, address } = req.body;
+        const addr = await prisma.address.findMany({
+            where: {
+                street: address.street
             }
-            return JSON.stringify(createdRestaurant);
+        });
+
+        if (addr.length > 0) {
+            Log.error('Route :: [/partner/create] address already in database');
+            return next(
+                new ApiError({ status: 409, message: 'Address already existing' })
+            );
+        }
+
+        address.uuid = AuthTools.uuiGenerator();
+
+        addr[0] = await prisma.address.create({
+            data: address
+        });
+
+        if (!addr[0]) {
+            Log.error(
+                'Route :: [/restaurant/create] could not create this address, maybe it is already existing'
+            );
+        }
+
+        try {
+            const restaurantCreated = new Restaurant({
+                name: restaurant.name,
+                rate: restaurant.rate,
+                deliveryPrice: restaurant.deliveryPrice,
+                address: addr[0].uuid,
+                price: restaurant.price,
+                cookType: restaurant.cookType,
+                products: [],
+                isAvailable: restaurant.isAvailable
+            });
+            const restaurantSaved = await restaurantCreated.save();
+            if (!restaurantSaved) {
+                return next(
+                    new ApiError({
+                        status: 500,
+                        message: 'Could not create the restaurant'
+                    })
+                );
+            }
+            const userPartner = await prisma.user.findUnique({ where: { uuid: userId } });
+            await Partner.findOneAndUpdate(
+                { userId: userPartner.uuid },
+                { $push: { restaurants: restaurantCreated } },
+                { returnOriginal: false, upsert: true }
+            );
+            return res.status(201).json('restaurant created');
         } catch (error) {
             Log.error(error);
-            return JSON.stringify('Cannot create a new restaurant ' + error);
+            return next(
+                new ApiError({ status: 500, message: 'Could not create the restaurant' })
+            );
         }
+    }
+
+    private static toDto(restaurant: IRestaurant, addr: IAddress) {
+        const restaurantDto = {
+            name: restaurant.name,
+            rate: restaurant.rate,
+            deliveryPrice: restaurant.deliveryPrice,
+            address: addr.street,
+            city: addr.city,
+            zipCode: addr.zipCode,
+            price: restaurant.price,
+            cookType: restaurant.cookType,
+            isAvailable: restaurant.isAvailable,
+            products: restaurant.products,
+            _id: restaurant._id
+        };
+
+        return restaurantDto;
     }
 }
 export default RestaurantController;
