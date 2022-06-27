@@ -32,7 +32,7 @@ class VerifyPartnerController {
                 return res.status(200).json({ message: 'Partner is refused by office' });
             }
 
-            const user = await prisma.user.create({
+            await prisma.user.create({
                 data: {
                     email: partner.email,
                     address: {
@@ -56,7 +56,7 @@ class VerifyPartnerController {
                     password: AuthTools.hashPassword(password)
                 }
             });
-            return res.status(201).json(user);
+            return res.status(201).json('created');
         } catch (err) {
             Log.error(`Route :: [/partner/create] server error: ${err}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));
