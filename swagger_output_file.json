@@ -241,10 +241,52 @@
                 }
             }
         },
-        "/product/create-product": {
+        "/product/create-product/{id}": {
             "post": {
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "example": "any"
+                                },
+                                "customizations": {
+                                    "example": "any"
+                                },
+                                "categoryId": {
+                                    "example": "any"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "product/create-menu/{id}": {
+            "post": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "name": "body",
                         "in": "body",
@@ -261,17 +303,20 @@
                         }
                     }
                 ],
-                "responses": {
-                    "201": {
-                        "description": "Created"
-                    }
-                }
+                "responses": {}
             }
         },
-        "/product/get-all": {
+        "/product/get-all/category/{id}": {
             "get": {
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -296,13 +341,20 @@
                 }
             }
         },
-        "/product/delete": {
+        "/product/delete-product/{id}/{restoId}": {
             "delete": {
                 "description": "",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "restoId",
+                        "in": "path",
+                        "required": true,
                         "type": "string"
                     }
                 ],
@@ -457,13 +509,7 @@
         "/category-product/delete": {
             "delete": {
                 "description": "",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "query",
-                        "type": "string"
-                    }
-                ],
+                "parameters": [],
                 "responses": {
                     "200": {
                         "description": "OK"

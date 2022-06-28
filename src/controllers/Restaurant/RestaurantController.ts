@@ -141,7 +141,9 @@ class RestaurantController {
                 { $push: { restaurants: restaurantCreated } },
                 { returnOriginal: false, upsert: true }
             );
-            return res.status(201).json('restaurant created');
+
+            const data = RestaurantController.toDto(restaurantSaved, addr[0]);
+            return res.status(201).json(data);
         } catch (error) {
             Log.error(error);
             return next(
