@@ -18,18 +18,6 @@ class ProductController {
         return res.send(await ProductController.deleteById(String(req.query.id)));
     }
 
-    public static async requestCreateOne(req: express.Request, res: express.Response) {
-        req.body.allergy.forEach(function (allergy) {
-            AllergyController.getByName(allergy.title).then((result) => {
-                if (result !== true) {
-                    Log.info("Allergy don't already exist, creating " + allergy.title);
-                    AllergyController.createOne(allergy);
-                }
-            });
-        });
-        return res.send(await ProductController.createOne(req.body));
-    }
-
     public static async requestUpdateById(req: express.Request, res: express.Response) {
         return res.send(
             await ProductController.updateById(String(req.query.id), req.body)
@@ -93,26 +81,6 @@ class ProductController {
         } catch (error) {
             Log.error(error);
             return JSON.stringify('Cannot delete product');
-        }
-    }
-
-    /**
-     * Create a product
-     * @author Pierre FORQUES <pierre.forques@viacesi.fr>
-     * @param {express.Request} req : need a body with a product
-     * @param {express.Response} res
-     * @returns {JSON}
-     */
-    private static async createOne(wantedProduct: IProduct): Promise<any> {
-        try {
-            const createdProduct = await new product(wantedProduct).save();
-            if (!createdProduct) {
-                throw new Error('No document found');
-            }
-            return JSON.stringify(createdProduct);
-        } catch (error) {
-            Log.error(error);
-            return JSON.stringify('Cannot create a new product ' + error);
         }
     }
 

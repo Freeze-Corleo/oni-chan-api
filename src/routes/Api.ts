@@ -25,6 +25,8 @@ import CreatePaymentController from '../controllers/Payment/CreatePayment';
 import CreateCategory from '../controllers/CategoryProduct/CreateCategoryProduct';
 import GetAllCategories from '../controllers/CategoryProduct/GetAllCategories';
 
+import CreateProductController from '../controllers/Product/CreateProduxctController';
+
 const router = Router();
 
 /**
@@ -84,7 +86,7 @@ router.get(
 /**
  * Products endpoints
  */
-router.post('/product/create', ProductController.requestCreateOne);
+router.post('/product/create-product', CreateProductController.performProduct);
 router.get('/product/get-all', ProductController.requestGetAll);
 router.get('/product/get', ProductController.requestGetById);
 router.delete('/product/delete', ProductController.requestDeleteById);
