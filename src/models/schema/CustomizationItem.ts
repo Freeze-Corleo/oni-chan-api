@@ -10,7 +10,9 @@ export const CustomizationItemSchema = new mongoose.Schema({
     isSoldOut: { required: true, type: Boolean }
 });
 
-export default mongoose.model<ICustomization>(
+const CustomizationItem = mongoose.model<ICustomization>(
     'CustomizationItem',
     CustomizationItemSchema
 );
+
+export default CustomizationItem;

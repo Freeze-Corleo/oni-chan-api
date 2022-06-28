@@ -25,7 +25,9 @@ import CreatePaymentController from '../controllers/Payment/CreatePayment';
 import CreateCategory from '../controllers/CategoryProduct/CreateCategoryProduct';
 import GetAllCategories from '../controllers/CategoryProduct/GetAllCategories';
 
-import CreateProductController from '../controllers/Product/CreateProduxctController';
+import CreateProductController from '../controllers/Product/CreateProductController';
+import GetAllProductController from '../controllers/Product/GetAllProduct';
+import DeleteProductController from '../controllers/Product/DeleteProduct';
 
 const router = Router();
 
@@ -86,10 +88,14 @@ router.get(
 /**
  * Products endpoints
  */
-router.post('/product/create-product', CreateProductController.performProduct);
-router.get('/product/get-all', ProductController.requestGetAll);
+router.post('/product/create-product/:id', CreateProductController.performProduct);
+router.post('product/create-menu/:id', CreateProductController.performMenu);
+router.get(
+    '/product/get-all/category/:id',
+    GetAllProductController.performProductByCategory
+);
 router.get('/product/get', ProductController.requestGetById);
-router.delete('/product/delete', ProductController.requestDeleteById);
+router.delete('/product/delete-product/:id/:restoId', DeleteProductController.perform);
 router.put('/product/update', ProductController.requestUpdateById);
 
 /**
@@ -111,7 +117,7 @@ router.get(
 router.post('/category-product/create', CreateCategory.perform);
 router.get('/category-product/get-all/:id', GetAllCategories.perform);
 router.get('/category-product/get', CategoryProductController.requestGetById);
-router.delete('/category-product/delete', CategoryProductController.requestDeleteById);
+router.delete('/category-product/delete', DeleteProductController.perform);
 router.put('/category-product/update', CategoryProductController.requestUpdateById);
 
 /**
