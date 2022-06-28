@@ -26,6 +26,7 @@ import CreateCategory from '../controllers/CategoryProduct/CreateCategoryProduct
 import GetAllCategories from '../controllers/CategoryProduct/GetAllCategories';
 
 import CreateProductController from '../controllers/Product/CreateProduxctController';
+import CommandController from '../controllers/Command/CommandController';
 
 const router = Router();
 
@@ -91,6 +92,12 @@ router.get('/product/get-all', ProductController.requestGetAll);
 router.get('/product/get', ProductController.requestGetById);
 router.delete('/product/delete', ProductController.requestDeleteById);
 router.put('/product/update', ProductController.requestUpdateById);
+
+/**
+ * Command endpoints
+ */
+router.get('/command/get-all', CommandController.getAllCommand);
+router.post('/command/create/', CommandController.createCommand);
 
 /**
  * Restaurant endpoints
