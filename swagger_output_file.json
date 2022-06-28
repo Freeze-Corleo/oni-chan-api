@@ -241,7 +241,7 @@
                 }
             }
         },
-        "/product/create": {
+        "/product/create-product": {
             "post": {
                 "description": "",
                 "parameters": [
@@ -251,7 +251,10 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "allergy": {
+                                "product": {
+                                    "example": "any"
+                                },
+                                "customizations": {
                                     "example": "any"
                                 }
                             }
@@ -259,8 +262,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "201": {
+                        "description": "Created"
                     }
                 }
             }

@@ -13,11 +13,13 @@ class Socket {
     constructor() {}
 
     public mountSocketServer(_express: Application) {
-        Log.info('Socket :: Mounting Socket server in API');
-
-        const io = this.socketio(_express);
         let interval;
-
+        Log.info('Socket :: Mounting Socket server in API');
+        const io = this.socketio(_express, {
+            cors: {
+                origin: 'http://localhost:3000'
+            }
+        });
         io.on('connection', (socket) => {
             console.log('New client connected');
             if (interval) {

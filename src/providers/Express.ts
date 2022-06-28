@@ -10,16 +10,19 @@ import ExceptionHandler from '../exception/Handler';
 class Express {
     public express: express.Application;
     public http = require('http');
+    public socketIO;
     /**
      * Initialize the express server
      */
     constructor() {
+        let interval;
         this.express = express();
+        this.socketIO = require('socket.io');
         Log.info('Express :: Mounting process for Express server');
         this.mountDotEnv();
-        this.mountClientWebSocket();
         this.mountMiddlewares();
         this.mountRoutes();
+        this.mountClientWebSocket();
     }
 
     /**
@@ -45,6 +48,7 @@ class Express {
 
     private mountClientWebSocket() {
         const server = this.http.createServer(this.express);
+        server.listen(6969);
         Socket.mountSocketServer(server);
     }
 
