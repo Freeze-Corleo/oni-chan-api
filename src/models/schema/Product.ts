@@ -9,8 +9,7 @@ export const ProductSchema = new mongoose.Schema({
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     imageUrl: { type: String },
     productId: { type: String },
-    customizationsList: { type: [Schema.Types.ObjectId], ref: 'Customization' },
-    allergy: { type: [Schema.Types.ObjectId], ref: 'Allergy' }
+    customizationsList: { type: [Schema.Types.ObjectId], ref: 'Customization' }
 });
 
 const Product = mongoose.model<IProduct>('Product', ProductSchema);

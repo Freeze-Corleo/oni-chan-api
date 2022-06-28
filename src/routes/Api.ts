@@ -22,6 +22,9 @@ import RestaurantController from '../controllers/Restaurant/RestaurantController
 
 import CreatePaymentController from '../controllers/Payment/CreatePayment';
 
+import CreateCategory from '../controllers/CategoryProduct/CreateCategoryProduct';
+import GetAllCategories from '../controllers/CategoryProduct/GetAllCategories';
+
 const router = Router();
 
 /**
@@ -90,7 +93,7 @@ router.put('/product/update', ProductController.requestUpdateById);
 /**
  * Restaurant endpoints
  */
-// router.get('/restaurant/get-all', RestaurantController.requestGetAll);
+router.get('/restaurant/get-all', RestaurantController.getAllRestaurant);
 router.post('/restaurant/create/:id', RestaurantController.createRestaurant);
 router.get(
     '/restaurant/get-all/partner/:id',
@@ -103,8 +106,8 @@ router.get(
 /**
  * Category products endpoints
  */
-router.post('/category-product/create', CategoryProductController.requestCreateOne);
-router.get('/category-product/get-all', CategoryProductController.requestGetAll);
+router.post('/category-product/create', CreateCategory.perform);
+router.get('/category-product/get-all/:id', GetAllCategories.perform);
 router.get('/category-product/get', CategoryProductController.requestGetById);
 router.delete('/category-product/delete', CategoryProductController.requestDeleteById);
 router.put('/category-product/update', CategoryProductController.requestUpdateById);

@@ -327,6 +327,17 @@
                 }
             }
         },
+        "/restaurant/get-all": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/restaurant/create/{id}": {
             "post": {
                 "description": "",
@@ -381,18 +392,41 @@
         "/category-product/create": {
             "post": {
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "title": {
+                                    "example": "any"
+                                },
+                                "restaurantId": {
+                                    "example": "any"
+                                }
+                            }
+                        }
+                    }
+                ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "201": {
+                        "description": "Created"
                     }
                 }
             }
         },
-        "/category-product/get-all": {
+        "/category-product/get-all/{id}": {
             "get": {
                 "description": "",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"

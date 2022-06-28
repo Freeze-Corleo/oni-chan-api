@@ -1,13 +1,15 @@
 import mongoose from '../../providers/Database';
 import ICategory from '../ICategory';
+import { Schema } from 'mongoose';
 
 export const categoryProductSchema = new mongoose.Schema({
-    title: String
+    title: { trim: true, required: true, type: String },
+    restaurantId: { type: Schema.Types.ObjectId, ref: 'Restaurant' }
 });
 
-const CategoryRestaurant = mongoose.model<ICategory>(
-    'CategoryRestaurant',
+const CategoryProduct = mongoose.model<ICategory>(
+    'CategoryProduct',
     categoryProductSchema
 );
 
-export default CategoryRestaurant;
+export default CategoryProduct;

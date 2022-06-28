@@ -1,5 +1,5 @@
-interface ICategory{
+interface ICategory {
     title: string;
-    iconUrl: string;
-    webUrl: string;
-} export default ICategory;
+    restaurantId: string;
+}
+export default ICategory;

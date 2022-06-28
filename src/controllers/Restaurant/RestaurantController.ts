@@ -12,6 +12,38 @@ import Partner from '../../models/schema/Partner';
 
 const prisma = new PrismaClient();
 class RestaurantController {
+    public static async getAllRestaurant(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const dtoRestaurant = [];
+        try {
+            const restaurants = await Restaurant.find();
+            const restLength = restaurants.length;
+            if (restLength == 0) {
+                Log.error('Route :: [/restaurant/get-all] there is not restaurants');
+                return next(new ApiError({ status: 404, message: 'No restaurants' }));
+            }
+            for (let i = 0; i < restLength; ++i) {
+                const addr = await prisma.address.findFirst({
+                    where: { uuid: restaurants[i].address }
+                });
+                const data = RestaurantController.toDto(restaurants[i], addr);
+                dtoRestaurant.push(data);
+            }
+            return res.status(200).json(dtoRestaurant);
+        } catch (error) {
+            Log.error('Route :: [/restaurant/get-all :' + error);
+            return next(
+                new ApiError({
+                    status: 500,
+                    message: 'Could retrieve restaurants'
+                })
+            );
+        }
+    }
+
     public static async getRestaurantsByPartner(
         req: Request,
         res: Response,
