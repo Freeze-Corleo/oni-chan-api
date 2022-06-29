@@ -44,6 +44,36 @@ class RestaurantController {
         }
     }
 
+    public static async getRestaurantById(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const restaurantId = req.params.id;
+        try {
+            const restaurant = await Restaurant.findById(restaurantId);
+            if (!restaurant) {
+                Log.error('Route :: [/restaurant/get/:id] there is not restaurant');
+                return res.status(200).json(restaurant);
+            }
+
+            const addr = await prisma.address.findFirst({
+                where: { uuid: restaurant.address }
+            });
+            const restaurantDto = RestaurantController.toDto(restaurant, addr);
+
+            return res.status(200).json(restaurantDto);
+        } catch (error) {
+            Log.error('Route :: [/restaurant/get/:id :' + error);
+            return next(
+                new ApiError({
+                    status: 500,
+                    message: 'Could retrieve restaurant'
+                })
+            );
+        }
+    }
+
     public static async getRestaurantsByPartner(
         req: Request,
         res: Response,
