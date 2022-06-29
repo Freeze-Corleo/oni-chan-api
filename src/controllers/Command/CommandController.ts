@@ -42,6 +42,56 @@ class CommandController {
         }
     }
 
+    public static async getCommandsByUserId(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const { status } = req.body;
+        const userId = req.params.userId;
+        const queryMapper = {
+            delivery_man: Command.find({ delivery: userId }),
+            client: Command.find({ userId: userId }),
+            restorer: Command.find({ restaurantId: userId })
+        };
+        try {
+            const commands = await queryMapper[status];
+            if (commands.length === 0) {
+                Log.info(`Route :: [/command/get-all/user/:id] no commands found`);
+                return next(new ApiError({ status: 500, message: 'Error from server' }));
+            }
+            res.status(200).json(commands);
+        } catch (error) {
+            Log.error(`Route :: [/command/get/:id] server error: ${error}`);
+            return next(new ApiError({ status: 500, message: 'Error from server' }));
+        }
+    }
+
+    public static async getCommandHistoryByUserId(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const { status } = req.body;
+        const userId = req.params.userId;
+        const queryMapper = {
+            delivery_man: Command.find({ delivery: userId, deleted: true }),
+            client: Command.find({ userId: userId, deleted: true }),
+            restorer: Command.find({ restaurantId: userId, deleted: true })
+        };
+        try {
+            const commands = await queryMapper[status];
+            if (commands.length === 0) {
+                Log.info(`Route :: [/command/get-all/user/:id] no commands found`);
+                return next(new ApiError({ status: 500, message: 'Error from server' }));
+            }
+            res.status(200).json(commands);
+        } catch (error) {
+            Log.error(`Route :: [/command/get/:id] server error: ${error}`);
+            return next(new ApiError({ status: 500, message: 'Error from server' }));
+        }
+    }
+
     public static async createCommand(req: Request, res: Response, next: NextFunction) {
         const { command, address } = req.body;
         const addr = await prisma.address.findMany({

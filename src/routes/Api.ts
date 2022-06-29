@@ -116,7 +116,7 @@ router.get(
 );
 router.get('/restaurant/get/:id', RestaurantController.getRestaurantById);
 // router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
-// router.delete('/restaurant/delete', RestaurantController.requestDeleteById);
+router.delete('/restaurant/delete/:id', RestaurantController.deleteRestaurantById);
 // router.put('/restaurant/update', RestaurantController.requestUpdateById);
 
 /**
