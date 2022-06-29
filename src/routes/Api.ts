@@ -114,6 +114,7 @@ router.get(
     '/restaurant/get-all/partner/:id',
     RestaurantController.getRestaurantsByPartner
 );
+router.get('/restaurant/get/:id', RestaurantController.getRestaurantById);
 // router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
 // router.delete('/restaurant/delete', RestaurantController.requestDeleteById);
 // router.put('/restaurant/update', RestaurantController.requestUpdateById);
