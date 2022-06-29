@@ -104,6 +104,8 @@ router.put('/product/update', ProductController.requestUpdateById);
  */
 router.get('/command/get-all', CommandController.getAllCommand);
 router.post('/command/create/', CommandController.createCommand);
+router.post('/command/get-all/user/:id', CommandController.getCommandsByUserId);
+router.post('/command/history/user/:id', CommandController.getCommandHistoryByUserId);
 
 /**
  * Restaurant endpoints
