@@ -77,12 +77,27 @@ class UserController {
 
     private static async deleteById(id: string) {
         try {
+            const addresses = await prisma.address.findMany({});
+            console.log(addresses);
+            let addressToDelete = '';
+            for (let address of addresses) {
+                if (address.userId == id) {
+                    addressToDelete = address.uuid;
+                    break;
+                }
+            }
+            const deleteAddress = await prisma.address.delete({
+                where: {
+                    uuid: addressToDelete
+                }
+            });
             const deleteUser = await prisma.user.delete({
                 where: {
                     uuid: id
                 }
             });
-            if (!deleteUser) {
+
+            if (!deleteUser || !deleteAddress) {
                 throw new Error('No document found');
             }
             return JSON.stringify(deleteUser);
