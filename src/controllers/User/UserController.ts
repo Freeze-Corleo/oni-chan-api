@@ -78,7 +78,7 @@ class UserController {
     private static async deleteById(id: string) {
         try {
             const addresses = await prisma.address.findMany({});
-            console.log(addresses);
+
             let addressToDelete = "";
             for (let address of addresses) {
                 if (address.userId == id) {
@@ -97,13 +97,17 @@ class UserController {
                 }
             });
 
-            if (!deleteUser || !deleteAddress) {
-                throw new Error('No document found');
+            if (!deleteUser) {
+                Log.error('Route :: [/user/delete/:id] user not found');
+                return (new ApiError({ status: 404, message: 'User not found' }));
+            } else if (!deleteAddress){
+                Log.error('Route :: [/address/get/:id] address not found');
+                return (new ApiError({ status: 404, message: 'Address not found' })); 
             }
             return JSON.stringify(deleteUser);
         } catch (error) {
-            Log.error(error);
-            return JSON.stringify('Cannot delete user');
+            Log.error(`Route :: [/user/delete/:id] server error: ${error}`);
+            return (new ApiError({ status: 500, message: 'Error from server' }));
         }
     }
 
