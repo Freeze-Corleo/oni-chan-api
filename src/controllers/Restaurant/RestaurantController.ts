@@ -225,6 +225,29 @@ class RestaurantController {
         }
     }
 
+    public static async requestUpdateRestaurantById(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const id = req.params.id;
+        const restaurantWanted: IRestaurant = req.body;
+        try {
+            const updtableRestaurant = await Restaurant.findOneAndUpdate(
+                { _id: id },
+                restaurantWanted
+            );
+            if (!updtableRestaurant) {
+                throw new Error('No document found');
+            }
+            console.log('e');
+            return res.status(200).json(updtableRestaurant);
+        } catch (error) {
+            Log.error(error);
+            return JSON.stringify('Cannot update a restaurant');
+        }
+    }
+
     private static toDto(restaurant: IRestaurant, addr: IAddress) {
         const restaurantDto = {
             name: restaurant.name,
