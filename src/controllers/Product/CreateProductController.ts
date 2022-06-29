@@ -61,7 +61,7 @@ class CreateProductController {
                 { returnOriginal: false, upsert: true }
             );
 
-            return res.status(201).json('product created');
+            return res.status(201).json(productCreated);
         } catch (error) {
             Log.error(`Route :: [/product/create-product] server error: ${error}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));
