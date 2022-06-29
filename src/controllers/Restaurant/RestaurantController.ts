@@ -54,7 +54,10 @@ class RestaurantController {
     ) {
         const restaurantId = req.params.id;
         try {
-            const restaurant = await Restaurant.findById(restaurantId);
+            const restaurant = await Restaurant.findById(restaurantId).populate({
+                path: 'products',
+                populate: { path: 'customizationsList' }
+            });
             if (!restaurant) {
                 Log.error('Route :: [/restaurant/get/:id] there is not restaurant');
                 return res.status(200).json(restaurant);
