@@ -157,7 +157,8 @@ class RestaurantController {
                 price: restaurant.price,
                 cookType: restaurant.cookType,
                 products: [],
-                isAvailable: restaurant.isAvailable
+                isAvailable: restaurant.isAvailable,
+                imageUrl: restaurant.imageUrl
             });
             const restaurantSaved = await restaurantCreated.save();
             if (!restaurantSaved) {
@@ -236,6 +237,7 @@ class RestaurantController {
             cookType: restaurant.cookType,
             isAvailable: restaurant.isAvailable,
             products: restaurant.products,
+            imageUrl: restaurant.imageUrl,
             _id: restaurant._id
         };
 

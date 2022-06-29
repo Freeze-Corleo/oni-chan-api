@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import Log from '../../middlewares/Log';
 import { PrismaClient } from '@prisma/client';
 import { ApiError } from '../../../types';
