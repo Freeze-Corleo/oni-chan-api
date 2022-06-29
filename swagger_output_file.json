@@ -220,68 +220,6 @@
                     }
                 }
             }
-<<<<<<< HEAD
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      }
-    },
-    "/restaurant/get-all/partner/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/restaurant/get/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/category-product/create": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "example": "any"
-                },
-                "restaurantId": {
-                  "example": "any"
-=======
         },
         "/status/health-check": {
             "get": {
@@ -300,7 +238,6 @@
                     "500": {
                         "description": "Internal Server Error"
                     }
->>>>>>> a7a240172b9dd8228afed1cd301b1541db430605
                 }
             }
         },
