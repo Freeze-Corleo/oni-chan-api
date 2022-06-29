@@ -11,7 +11,8 @@ export const restaurantSchema = new mongoose.Schema({
     price: { type: Number },
     cookType: { trim: true, type: String },
     products: [ProductSchema],
-    isAvailable: { type: Boolean }
+    isAvailable: { type: Boolean },
+    imageUrl: { type: String }
 });
 
 export const Restaurant = mongoose.model<IRestaurant>('Restaurant', restaurantSchema);

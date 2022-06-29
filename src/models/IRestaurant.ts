@@ -12,6 +12,7 @@ interface IRestaurant {
     cookType: string;
     products: IProduct[];
     isAvailable: boolean;
+    imageUrl: string;
     _id: string;
 }
 export default IRestaurant;

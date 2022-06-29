@@ -78,15 +78,20 @@ class UserController {
     private static async deleteById(id: string) {
         try {
             const addresses = await prisma.address.findMany({});
+<<<<<<< HEAD
 
             let addressToDelete = "";
+=======
+            console.log(addresses);
+            let addressToDelete = '';
+>>>>>>> a7a240172b9dd8228afed1cd301b1541db430605
             for (let address of addresses) {
                 if (address.userId == id) {
                     addressToDelete = address.uuid;
                     break;
                 }
-             }
-             const deleteAddress = await prisma.address.delete({
+            }
+            const deleteAddress = await prisma.address.delete({
                 where: {
                     uuid: addressToDelete
                 }

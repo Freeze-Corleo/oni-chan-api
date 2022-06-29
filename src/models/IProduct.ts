@@ -10,5 +10,6 @@ interface IProduct {
     productId: string;
     customizationsList: ICustomization[];
     alleric: IAllergy[];
+    _id: string;
 }
 export default IProduct;

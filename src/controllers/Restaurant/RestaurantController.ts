@@ -8,6 +8,9 @@ import IAddress from '../../models/IAddress';
 import AuthTools from '../../../utils/auth';
 
 import Restaurant from '../../models/schema/Restaurant';
+import Product from '../../models/schema/Product';
+import Customization from '../../models/schema/Customization';
+import CategoryProduct from '../../models/schema/CategoryProduct';
 import Partner from '../../models/schema/Partner';
 
 const prisma = new PrismaClient();
@@ -154,7 +157,8 @@ class RestaurantController {
                 price: restaurant.price,
                 cookType: restaurant.cookType,
                 products: [],
-                isAvailable: restaurant.isAvailable
+                isAvailable: restaurant.isAvailable,
+                imageUrl: restaurant.imageUrl
             });
             const restaurantSaved = await restaurantCreated.save();
             if (!restaurantSaved) {
@@ -182,6 +186,45 @@ class RestaurantController {
         }
     }
 
+    public static async deleteRestaurantById(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const restaurantId = req.params.id;
+        try {
+            let customizationListId;
+            const restaurant = await Restaurant.findById(restaurantId);
+
+            // keep it async we don't need it anyway
+            prisma.address.delete({ where: { uuid: restaurant.address } });
+
+            const productsId = restaurant.products;
+            const productsLength = productsId.length;
+            await restaurant.delete();
+            for (let i = 0; i < productsLength; ++i) {
+                const product = await Product.findById(productsId[i]);
+                customizationListId = product.customizationsList;
+
+                // keep it async we don't need it anyway
+                CategoryProduct.deleteOne({ _id: product.category });
+                product.delete();
+            }
+
+            const customizationListLength = customizationListId.length;
+            for (let i = 0; i < customizationListLength; ++i) {
+                Customization.deleteOne({ _id: customizationListId[i] });
+            }
+
+            res.status(200).json(restaurantId);
+        } catch (error) {
+            Log.error(error);
+            return next(
+                new ApiError({ status: 500, message: 'Could not delete the restaurant' })
+            );
+        }
+    }
+
     private static toDto(restaurant: IRestaurant, addr: IAddress) {
         const restaurantDto = {
             name: restaurant.name,
@@ -194,6 +237,7 @@ class RestaurantController {
             cookType: restaurant.cookType,
             isAvailable: restaurant.isAvailable,
             products: restaurant.products,
+            imageUrl: restaurant.imageUrl,
             _id: restaurant._id
         };
 
