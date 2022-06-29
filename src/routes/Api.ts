@@ -25,6 +25,7 @@ import CreatePaymentController from '../controllers/Payment/CreatePayment';
 import CreateCategory from '../controllers/CategoryProduct/CreateCategoryProduct';
 import GetAllCategories from '../controllers/CategoryProduct/GetAllCategories';
 
+import CommandController from '../controllers/Command/CommandController';
 import CreateProductController from '../controllers/Product/CreateProductController';
 import GetAllProductController from '../controllers/Product/GetAllProduct';
 import DeleteProductController from '../controllers/Product/DeleteProduct';
@@ -97,6 +98,12 @@ router.get(
 router.get('/product/get', ProductController.requestGetById);
 router.delete('/product/delete-product/:id/:restoId', DeleteProductController.perform);
 router.put('/product/update', ProductController.requestUpdateById);
+
+/**
+ * Command endpoints
+ */
+router.get('/command/get-all', CommandController.getAllCommand);
+router.post('/command/create/', CommandController.createCommand);
 
 /**
  * Restaurant endpoints
