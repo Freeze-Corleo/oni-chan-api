@@ -73,7 +73,6 @@ class RestaurantController {
                 })
             );
         }
-
     }
 
     public static async getAllRestaurant(

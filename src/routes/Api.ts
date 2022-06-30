@@ -103,7 +103,7 @@ router.put('/product/update', ProductController.requestUpdateById);
  * Command endpoints
  */
 router.get('/command/get-all', CommandController.getAllCommand);
-router.post('/command/create/', CommandController.createCommand);
+router.post('/command/create', CommandController.createCommand);
 router.post('/command/get-all/user/:id', CommandController.getCommandsByUserId);
 router.post('/command/history/user/:id', CommandController.getCommandHistoryByUserId);
 router.get('/command/by-restaurant', CommandController.getCommandByRestaurantId);
@@ -121,7 +121,11 @@ router.get('/restaurant/get/:id', RestaurantController.getRestaurantById);
 // router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
 router.delete('/restaurant/delete/:id', RestaurantController.deleteRestaurantById);
 router.put('/restaurant/update/:id', RestaurantController.requestUpdateRestaurantById);
+<<<<<<< HEAD
 router.get('/restaurant/statistics', RestaurantController.getStatisticsRestaurantsByUserId)
+=======
+router.get('/restaurant/statistics', RestaurantController.getStatRestaurant);
+>>>>>>> 549e29d7760d3c3dbc4ecc44e68427c1ba7b7c45
 
 /**
  * Category products endpoints

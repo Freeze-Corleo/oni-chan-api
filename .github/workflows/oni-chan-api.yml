@@ -73,3 +73,4 @@ jobs:
           HD_DB_MS: db_freezou
           HD_PORT_MS: 19000
           HD_DATABASE_URL: mysql://root:Leodelponcesi12345&@2.tcp.ngrok.io:19449/db_freezou?connection_limit=5
+          HD_PRISMA_DATABASE:
