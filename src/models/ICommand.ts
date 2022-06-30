@@ -6,8 +6,8 @@ interface ICommand {
     products: IProduct[];
     restaurantId: ObjectId;
     address: string;
-    delivery: ObjectId;
-    userId: ObjectId;
+    delivery: string;
+    userId: string;
     isAccepted: boolean;
     isRecieved: boolean;
     uuid: string;
