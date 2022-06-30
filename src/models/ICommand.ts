@@ -12,5 +12,6 @@ interface ICommand {
     isRecieved: boolean;
     uuid: string;
     deleted: boolean;
+    createdAt: Date;
 }
 export default ICommand;

@@ -121,7 +121,7 @@ router.get('/restaurant/get/:id', RestaurantController.getRestaurantById);
 // router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
 router.delete('/restaurant/delete/:id', RestaurantController.deleteRestaurantById);
 router.put('/restaurant/update/:id', RestaurantController.requestUpdateRestaurantById);
-router.get('/restaurant/statistics', RestaurantController.getStatRestaurant)
+router.get('/restaurant/statistics', RestaurantController.getStatisticsRestaurantsByUserId)
 
 /**
  * Category products endpoints

@@ -15,35 +15,54 @@ import Partner from '../../models/schema/Partner';
 
 import Command from '../../models/schema/Command';
 
-
 const prisma = new PrismaClient();
 class RestaurantController {
 
-    public static async getStatRestaurant(req: Request, res: Response, next: NextFunction){
+    public static async getStatisticsRestaurantsByUserId(req: Request, res: Response, next: NextFunction){
         try{
-            //Get every command by restaurant id
-            const commands = await Command.find({restaurantId: req.query.id}).exec(); //isrecceived : true
+            //get partner from user id
+            const partner = await Partner.findOne({userId: req.query.id}).exec();
 
-            if (!commands) {
-                Log.error('Route :: [/command/get-all] there is not commands with this restaurant id');
-                return next(new ApiError({ status: 404, message: 'No commands with this restaurant id' }));
-            }
-
-            //calcul the total price
-            let price: number = 0;
-            commands.forEach(command => {
-                price += command.price
-            });
-
-            let commandCount: number = commands.length;
+            const everyCommands = [];
+            const strNowMonth = "0"+(new Date().getMonth()+1);
             
-            console.log(commandCount);
+            let price: number = 0;
+            let commandCount: number = 0;
+            let restaurantCount: number = 0;
+            let commandCountThisMonth: number = 0;
+            let priceThisMonth: number = 0;
+
+            for (let restaurant of partner.restaurants) {
+                const commands = await Command.find({restaurantId: restaurant._id})
+                restaurantCount += 1;
+
+                if(commands.length !== 0) {
+                    console.log(commands);
+                    commands.forEach(command => {
+                        price += command.price;
+                        commandCount += 1;
+                        
+                        const han = new Date(command.createdAt).toLocaleDateString();
+                        const [day, month, year] = han.toString().split('/');
+                        console.log(strNowMonth+"   --  "+month);
+                        if(strNowMonth.toString() == month){
+                            commandCountThisMonth += 1;
+                            priceThisMonth += command.price;
+                        }
+
+                    });
+                }
+            }
+        
             const han = 
             {
                 totalPrice: price,
                 totalCommandCount: commandCount,
+                thisMonthCommandCount: commandCountThisMonth,
+                thisMonthPrice: priceThisMonth,
+                totalRestaurantCount: restaurantCount
             }
-            return res.status(200).json(commands);
+            return res.status(200).json(han);
 
         }catch(error){
             Log.error('Route :: [/restaurant/statistics :' + error);
