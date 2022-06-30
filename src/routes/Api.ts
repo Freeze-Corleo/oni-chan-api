@@ -106,7 +106,8 @@ router.get('/command/get-all', CommandController.getAllCommand);
 router.post('/command/create', CommandController.createCommand);
 router.post('/command/get-all/user/:id', CommandController.getCommandsByUserId);
 router.post('/command/history/user/:id', CommandController.getCommandHistoryByUserId);
-router.get('/command/by-restaurant', CommandController.getCommandByRestaurantId);
+router.get('/command/by-restaurant/:id', CommandController.getCommandByRestaurantId);
+router.delete('/command/delete/:id', CommandController.deleteCommand);
 
 /**
  * Restaurant endpoints

@@ -393,7 +393,7 @@
                 }
             }
         },
-        "/command/create/": {
+        "/command/create": {
             "post": {
                 "description": "",
                 "parameters": [
@@ -404,9 +404,6 @@
                             "type": "object",
                             "properties": {
                                 "command": {
-                                    "example": "any"
-                                },
-                                "address": {
                                     "example": "any"
                                 }
                             }
@@ -480,13 +477,14 @@
                 }
             }
         },
-        "/command/by-restaurant": {
+        "/command/by-restaurant/{id}": {
             "get": {
                 "description": "",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
+                        "required": true,
                         "type": "string"
                     }
                 ],
@@ -495,6 +493,20 @@
                         "description": "OK"
                     }
                 }
+            }
+        },
+        "/command/delete/{id}": {
+            "delete": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {}
             }
         },
         "/restaurant/get-all": {
@@ -604,6 +616,18 @@
                         "in": "path",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "_id": {
+                                    "example": "any"
+                                }
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -1051,13 +1075,13 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "params": {
-                                    "example": "any"
-                                },
                                 "productsId": {
                                     "example": "any"
                                 },
                                 "provider": {
+                                    "example": "any"
+                                },
+                                "totalPrice": {
                                     "example": "any"
                                 }
                             }
