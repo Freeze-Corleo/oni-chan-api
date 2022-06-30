@@ -114,7 +114,6 @@ class CommandController {
                 const addr = await prisma.address.findFirst({
                     where: { uuid: commands[i].address }
                 });
-                console.log('sz', addr);
                 if (addr) {
                     const data = CommandController.toDto(commands[i], addr);
                     dtoCommand.push(data);

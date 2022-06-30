@@ -6,26 +6,29 @@
 
 import { Application } from 'express';
 import Log from './Log';
-import Local from '../providers/Local';
 
 class Socket {
     public socketio = require('socket.io');
-    constructor() {}
+    public io;
 
     public mountSocketServer(_express: Application) {
         let interval;
         Log.info('Socket :: Mounting Socket server in API');
-        const io = this.socketio(_express, {
+        this.io = this.socketio(_express, {
             cors: {
                 origin: 'http://localhost:3000'
             }
         });
-        io.on('connection', (socket) => {
+        this.io.on('connection', (socket) => {
             console.log('New client connected');
             if (interval) {
                 clearInterval(interval);
             }
             interval = setInterval(() => getApiAndEmit(socket), 1000);
+            socket.on('CommandSocket', (data) => {
+                console.log(data);
+                socket.broadcast.emit('ClientSocket', data);
+            });
             socket.on('disconnect', () => {
                 console.log('Client disconnected');
                 clearInterval(interval);
@@ -35,8 +38,12 @@ class Socket {
         const getApiAndEmit = (socket) => {
             const response = new Date();
             // Emitting a new message. Will be consumed by the client
-            socket.emit('FromAPI', response);
+            socket.broadcast.emit('FromAPI', response);
         };
+    }
+
+    public getIoSocket() {
+        return this.io;
     }
 }
 
