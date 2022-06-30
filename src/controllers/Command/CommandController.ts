@@ -186,10 +186,10 @@ class CommandController {
         };
         try {
             const commands = await queryMapper[status];
-            if (commands.length === 0) {
+            /*if (commands.length === 0) {
                 Log.info(`Route :: [/command/get-all/user/:id] no commands found`);
                 return next(new ApiError({ status: 500, message: 'Error from server' }));
-            }
+            }*/
             res.status(200).json(commands);
         } catch (error) {
             Log.error(`Route :: [/command/get/:id] server error: ${error}`);
