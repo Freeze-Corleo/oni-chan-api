@@ -13,5 +13,6 @@ interface ICommand {
     uuid: string;
     deleted: boolean;
     createdAt: Date;
+    id: string;
 }
 export default ICommand;
