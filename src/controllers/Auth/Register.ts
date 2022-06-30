@@ -100,6 +100,7 @@ class RegisterController {
         } finally {
             if (user) {
                 const verificationCode = AuthTools.generateRandomVerificationCode();
+                console.log(verificationCode);
                 await client.user.update({
                     where: {
                         uuid: user.uuid

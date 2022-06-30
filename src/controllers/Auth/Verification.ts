@@ -42,6 +42,10 @@ class VerificationController {
                     }
                 });
 
+                const addr = await client.address.findMany({
+                    where: { userId: user.uuid }
+                });
+
                 const datas = {
                     email: user.email,
                     phone: user.phone,
@@ -49,20 +53,23 @@ class VerificationController {
                     status: user.status,
                     profilUrl: '',
                     uuid: user.uuid,
-                    address: user.address[0].uuid
+                    address: addr[0].uuid
                 };
 
                 const token = AuthTools.generateToken(datas);
                 return res
+                    .status(200)
                     .cookie('FREEZE_JWT', token, {
                         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 3)
                     })
                     .json({
                         token
                     });
+            } else {
+                return res
+                    .status(500)
+                    .json({ status: 500, message: 'Error from server' });
             }
-
-            return res.status(500).json({ status: 500, message: 'Error from server' });
         } catch (error) {
             Log.error(`Route :: [/auth/verify] server error: ${error}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));
