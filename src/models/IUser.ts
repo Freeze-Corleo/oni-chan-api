@@ -1,6 +1,12 @@
 import { ObjectId } from 'mongodb';
 import IAddress from './IAddress';
 
+enum Status {
+    RESTORER = 'restorer',
+    CLIENT = 'client',
+    DELIVERY_MAN = 'delivery_man'
+}
+
 interface IUser {
     email: string;
     firstname: string;
@@ -23,4 +29,5 @@ interface IUser {
     resetToken: string;
     isBanned: boolean;
     uuid: string;
-} export default IUser;
+}
+export default IUser;
