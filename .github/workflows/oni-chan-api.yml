@@ -55,6 +55,8 @@ jobs:
         run: npm run test
       - name: Build api service
         run: npm run build
+      - name: Copy swagger file in build folder
+        run: cp swagger_output_file.json ./build
   deploy:
     runs-on: ubuntu-latest
     needs: [build]

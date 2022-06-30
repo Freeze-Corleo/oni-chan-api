@@ -12,7 +12,7 @@
     "start": "node build/src/index.js",
     "pretty-quick": "pretty-quick",
     "lint": "eslint src/**/*.ts",
-    "build": "npx tsc --build --verbose && cp swagger_output_file.json ./build",
+    "build": "npx tsc --build --verbose",
     "prepare": "husky install .husky"
   },
   "husky": {
