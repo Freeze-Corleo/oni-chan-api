@@ -49,7 +49,7 @@ class VerificationController {
                     status: user.status,
                     profilUrl: '',
                     uuid: user.uuid,
-                    address: user.address
+                    address: user.address[0].uuid
                 };
 
                 const token = AuthTools.generateToken(datas);

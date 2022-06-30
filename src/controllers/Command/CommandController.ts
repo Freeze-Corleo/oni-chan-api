@@ -9,6 +9,55 @@ import ICommand from '../../models/ICommand';
 
 const prisma = new PrismaClient();
 class CommandController {
+    public static async createCommand(req: Request, res: Response, next: NextFunction) {
+        const { command } = req.body;
+        const addr = await prisma.address.findMany({
+            where: {
+                uuid: command.address
+            }
+        });
+
+        if (addr.length == 0) {
+            Log.error('Route :: [/command/create] there is no address existing');
+            return next(new ApiError({ status: 404, message: 'No address' }));
+        }
+
+        command.uuid = AuthTools.uuiGenerator();
+
+        try {
+            const commandCreated = new Command({
+                price: command.price,
+                products: command.products,
+                restaurantId: command.restaurantId,
+                address: addr[0].uuid,
+                delivery: null,
+                userId: command.userId,
+                isAccepted: command.isAccepted,
+                isRecieved: command.isRecieved,
+                uuid: command.uuid,
+                deleted: command.deleted,
+                createdAt: Date.now()
+            });
+
+            const commandSaved = await commandCreated.save();
+            if (!commandSaved) {
+                Log.error(`Route :: [/command/create] server error`);
+                return next(
+                    new ApiError({
+                        status: 500,
+                        message: 'Could not create the command'
+                    })
+                );
+            }
+            return res.status(201).json(commandSaved);
+        } catch (error) {
+            Log.error(`Route :: [/command/create] server error: ${error}`);
+            return next(
+                new ApiError({ status: 500, message: 'Could not create the command' })
+            );
+        }
+    }
+
     public static async getAllCommand(req: Request, res: Response, next: NextFunction) {
         const dtoCommand = [];
         try {
@@ -31,7 +80,6 @@ class CommandController {
             }
             return res.status(200).json(dtoCommand);
         } catch (error) {
-            console.log('s', error);
             Log.error('Route :: [/command/get-all :' + error);
             return next(
                 new ApiError({
@@ -89,54 +137,6 @@ class CommandController {
         } catch (error) {
             Log.error(`Route :: [/command/get/:id] server error: ${error}`);
             return next(new ApiError({ status: 500, message: 'Error from server' }));
-        }
-    }
-
-    public static async createCommand(req: Request, res: Response, next: NextFunction) {
-        const { command } = req.body;
-        const addr = await prisma.address.findMany({
-            where: {
-                uuid: command.address
-            }
-        });
-
-        if (addr.length == 0) {
-            Log.error('Route :: [/command/create] there is no address existing');
-            return next(new ApiError({ status: 404, message: 'No address' }));
-        }
-
-        command.uuid = AuthTools.uuiGenerator();
-
-        try {
-            const commandCreated = new Command({
-                price: command.price,
-                products: command.products,
-                restaurantId: command.restaurantId,
-                address: addr[0].uuid,
-                delivery: command.delivery,
-                userId: command.userId,
-                isAccepted: command.isAccepted,
-                isRecieved: command.isRecieved,
-                uuid: command.uuid,
-                deleted: command.deleted
-            });
-
-            const commandSaved = await commandCreated.save();
-            if (!commandSaved) {
-                Log.error(`Route :: [/command/create] server error`);
-                return next(
-                    new ApiError({
-                        status: 500,
-                        message: 'Could not create the command'
-                    })
-                );
-            }
-            return res.status(201).json(commandSaved);
-        } catch (error) {
-            Log.error(`Route :: [/command/create] server error: ${error}`);
-            return next(
-                new ApiError({ status: 500, message: 'Could not create the command' })
-            );
         }
     }
 

@@ -393,7 +393,7 @@
                 }
             }
         },
-        "/command/create/": {
+        "/command/create": {
             "post": {
                 "description": "",
                 "parameters": [
