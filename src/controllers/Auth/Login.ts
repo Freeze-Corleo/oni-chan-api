@@ -65,7 +65,8 @@ class LoginController {
                 profilUrl: user.profilUrl,
                 firstname: user.firstname,
                 lastname: user.lastname,
-                uuid: user.uuid
+                uuid: user.uuid,
+                address: user.address
             };
 
             const token = AuthTools.generateToken(datas);

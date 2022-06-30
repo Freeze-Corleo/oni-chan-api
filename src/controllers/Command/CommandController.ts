@@ -116,33 +116,19 @@ class CommandController {
     }
 
     public static async createCommand(req: Request, res: Response, next: NextFunction) {
-        const { command, address } = req.body;
+        const { command } = req.body;
         const addr = await prisma.address.findMany({
             where: {
-                street: address.street
+                uuid: command.address
             }
         });
-        console.log('a', addr);
 
-        if (addr.length > 0) {
-            Log.error('Route :: [/command/create] address already in database');
-            return next(
-                new ApiError({ status: 409, message: 'Address already existing' })
-            );
+        if (addr.length == 0) {
+            Log.error('Route :: [/command/create] there is no address existing');
+            return next(new ApiError({ status: 404, message: 'No address' }));
         }
 
-        address.uuid = AuthTools.uuiGenerator();
         command.uuid = AuthTools.uuiGenerator();
-
-        addr[0] = await prisma.address.create({
-            data: address
-        });
-
-        if (!addr[0]) {
-            Log.error(
-                'Route :: [/command/create] could not create this address, maybe it is already existing'
-            );
-        }
 
         try {
             const commandCreated = new Command({
@@ -157,9 +143,10 @@ class CommandController {
                 uuid: command.uuid,
                 deleted: command.deleted
             });
-            console.log('sa', commandCreated);
+
             const commandSaved = await commandCreated.save();
             if (!commandSaved) {
+                Log.error(`Route :: [/command/create] server error`);
                 return next(
                     new ApiError({
                         status: 500,
@@ -167,9 +154,9 @@ class CommandController {
                     })
                 );
             }
-            return res.status(201).json('command created');
+            return res.status(201).json(commandSaved);
         } catch (error) {
-            console.log('soeszaszass', error);
+            Log.error(`Route :: [/command/create] server error: ${error}`);
             return next(
                 new ApiError({ status: 500, message: 'Could not create the command' })
             );

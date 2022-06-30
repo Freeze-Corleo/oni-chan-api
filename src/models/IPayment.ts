@@ -14,6 +14,7 @@ export interface PaymentOptions {
     paymentMethod?: string;
     paymentMethodId?: string;
     paymentMethodType?: string;
+    totalPrice?: number;
     metadata?: {
         [key: string]: string;
     };
