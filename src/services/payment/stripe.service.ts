@@ -6,7 +6,7 @@ import Log from '../../middlewares/Log';
 import Product from '../../models/schema/Product';
 import { PaymentOptions, CallbackConfig } from '../../models/IPayment';
 
-export const stripe = new Stripe(Locals.config().STRIPE_SK, {
+export const stripe = new Stripe(Locals.config().stripeSk, {
     apiVersion: '2020-08-27'
 });
 
@@ -17,26 +17,32 @@ export default class StripeService {
         opts: PaymentOptions,
         cbs: CallbackConfig
     ): Promise<{ client_secret: string | null; total_price: number | null }> {
-        let totalPrice = 0;
         // get the Stripe customer object
         const customer = await StripeService.getCustomer(opts.clientId);
         // crating the total price of the payment intent
-        opts.productsId.map(async (productId) => {
-            const price = await StripeService.getPrices(productId);
-            totalPrice += totalPrice + price.unit_amount;
-        });
+        // opts.productsId.map(async (productId) => {
+        //     const price = await StripeService.getPrices(productId);
+        //     totalPrice += totalPrice + price.unit_amount;
+        // });
+        if (customer) {
+            try {
+                const resultPaymentIntent = await stripe.paymentIntents.create({
+                    customer: customer.id,
+                    currency: 'eur',
+                    amount: +opts.totalPrice,
+                    description: 'Payment intent',
+                    payment_method_types: ['card']
+                });
 
-        if (!customer) {
-            const resultPaymentIntent = await stripe.paymentIntents.create({
-                customer: customer.id,
-                currency: 'eur',
-                amount: totalPrice
-            });
-
-            return {
-                client_secret: resultPaymentIntent.client_secret,
-                total_price: totalPrice
-            };
+                return {
+                    client_secret: resultPaymentIntent.client_secret,
+                    total_price: opts.totalPrice
+                };
+            } catch (error) {
+                Log.error(
+                    `StripeService :: an error occured while attempting payment:  ${error}`
+                );
+            }
         }
 
         return { client_secret: null, total_price: null };
@@ -48,7 +54,7 @@ export default class StripeService {
         Log.info(
             `StripeService :: getting stripe customer from user with id: ${_userId}`
         );
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
             where: {
                 uuid: _userId
             },
@@ -60,7 +66,6 @@ export default class StripeService {
             Log.error('StripeService :: there is not users');
             return customer;
         }
-
         if (user.customerId) {
             const customers = await stripe.customers.search({
                 query: `email:"${user.email}}"`
@@ -133,18 +138,19 @@ export default class StripeService {
     // Get price from stripe API and create if from a product if does not;
     public static async getPrices(_productId: string) {
         const productMatr = await Product.findById(_productId);
+        const priceProduct = productMatr.price * 100;
         Log.info(
             `StripeService :: getting Stripe price from the product id: ${productMatr.productId}`
         );
         const prices = await stripe.prices.list({
             lookup_keys: [
-                productMatr.title + '_' + productMatr.price + '_' + productMatr.productId
+                productMatr.title + '_' + priceProduct + '_' + productMatr.productId
             ],
             expand: ['data.product']
         });
 
         const selectedPrice = prices.data.find(
-            (price) => price.unit_amount == productMatr.price
+            (price) => price.unit_amount == priceProduct
         );
 
         if (!selectedPrice) {
@@ -157,12 +163,8 @@ export default class StripeService {
             const params = {
                 currency: 'eur',
                 lookup_key:
-                    productMatr.title +
-                    '_' +
-                    productMatr.price +
-                    '_' +
-                    productMatr.productId,
-                unit_amount: productMatr.price,
+                    productMatr.title + '_' + priceProduct + '_' + productMatr.productId,
+                unit_amount: priceProduct,
                 product: product.id
             };
 

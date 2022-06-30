@@ -405,9 +405,6 @@
                             "properties": {
                                 "command": {
                                     "example": "any"
-                                },
-                                "address": {
-                                    "example": "any"
                                 }
                             }
                         }
@@ -999,13 +996,13 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "params": {
-                                    "example": "any"
-                                },
                                 "productsId": {
                                     "example": "any"
                                 },
                                 "provider": {
+                                    "example": "any"
+                                },
+                                "totalPrice": {
                                     "example": "any"
                                 }
                             }

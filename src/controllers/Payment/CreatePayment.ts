@@ -17,8 +17,8 @@ const service = {
  */
 class CreatePaymentController {
     public static async perform(req: Request, res: Response, next: NextFunction) {
-        const userId = req.body.params;
-        const { productsId, provider } = req.body;
+        const userId = req.params.userId;
+        const { productsId, provider, totalPrice } = req.body;
         try {
             const paymentIntent = await service[provider].createPaymentIntent(
                 {
@@ -27,7 +27,8 @@ class CreatePaymentController {
                     currency: 'EUR',
                     description: '',
                     paymentType: '',
-                    payment: PaymentType.ONETIME
+                    payment: PaymentType.ONETIME,
+                    totalPrice: totalPrice * 100
                 },
                 {}
             );
