@@ -18,6 +18,36 @@
         "apiKeyAuth": {
             "type": "apiKey",
             "in": "header",
+<<<<<<< HEAD
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "zipCode": {
+                  "example": "any"
+                },
+                "city": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+=======
             "name": "X-API-KEY",
             "description": "any description..."
         }
@@ -780,6 +810,7 @@
                     "200": {
                         "description": "OK"
                     }
+>>>>>>> 549e29d7760d3c3dbc4ecc44e68427c1ba7b7c45
                 }
             }
         },
@@ -849,6 +880,112 @@
                     }
                 }
             }
+<<<<<<< HEAD
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/product/get-all/category/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/product/get": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/product/delete-product/{id}/{restoId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "restoId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/product/update": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/command/get-all": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/command/create/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "command": {
+                  "example": "any"
+=======
         },
         "/user/get/{id}": {
             "get": {
@@ -865,6 +1002,7 @@
                     "200": {
                         "description": "OK"
                     }
+>>>>>>> 549e29d7760d3c3dbc4ecc44e68427c1ba7b7c45
                 }
             }
         },
@@ -995,6 +1133,133 @@
                     }
                 }
             }
+<<<<<<< HEAD
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/restaurant/get-all/partner/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/restaurant/get/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/restaurant/delete/{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/restaurant/update/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/restaurant/statistics": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/category-product/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "example": "any"
+                },
+                "restaurantId": {
+                  "example": "any"
+=======
         },
         "/partner/get-all": {
             "get": {
@@ -1015,6 +1280,7 @@
                     "200": {
                         "description": "OK"
                     }
+>>>>>>> 549e29d7760d3c3dbc4ecc44e68427c1ba7b7c45
                 }
             }
         },
@@ -1058,6 +1324,59 @@
                     }
                 }
             }
+<<<<<<< HEAD
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/partner/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "siren": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "zipCode": {
+                  "example": "any"
+                },
+                "city": {
+                  "example": "any"
+                },
+                "activity": {
+                  "example": "any"
+                },
+                "firstname": {
+                  "example": "any"
+                },
+                "lastname": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phone": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+=======
         },
         "/payment/payment-intent/{userId}": {
             "post": {
@@ -1092,6 +1411,7 @@
                     "200": {
                         "description": "OK"
                     }
+>>>>>>> 549e29d7760d3c3dbc4ecc44e68427c1ba7b7c45
                 }
             }
         }
@@ -1109,6 +1429,44 @@
                     "example": "Marie Doe"
                 }
             }
+<<<<<<< HEAD
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/payment/payment-intent/{userId}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "productsId": {
+                  "example": "any"
+                },
+                "provider": {
+                  "example": "any"
+                },
+                "totalPrice": {
+                  "example": "any"
+=======
         },
         "User": {
             "type": "object",
@@ -1156,6 +1514,7 @@
                             }
                         }
                     }
+>>>>>>> 549e29d7760d3c3dbc4ecc44e68427c1ba7b7c45
                 }
             }
         },
