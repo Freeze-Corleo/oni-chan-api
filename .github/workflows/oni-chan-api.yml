@@ -74,3 +74,8 @@ jobs:
           HD_PORT_MS: 19000
           HD_DATABASE_URL: mysql://root:Leodelponcesi12345&@8.tcp.ngrok.io:16009/db_freezou?connection_limit=5
           HD_PRISMA_DATABASE: mysql://root:Leodelponcesi12345&@8.tcp.ngrok.io:16009/db_freezou?connection_limit=5
+          HD_SEND_GRID_KEY: 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
+          HD_SG_REGISTER_TEMPLATE: d-095286ba916642f9ae5ea4a9b4ae8701
+          HD_GOOGLE_CLIENT_ID: 749879349440-49s7sv0vkd0i6cv01659m5vteivtqmqn.apps.googleusercontent.com
+          HD_GOOGLE_CLIENT_SECRET: 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
+          HD_STRIPE_SK: sk_test_51LFDCCIc1K9pzplS9hqj40DGed8r7LUJFKBPlHYp968384LKdrUFcIKkkMl0AiSdiGqMmaDjE94dATBVZt4uqmYw004NVUZTxX
