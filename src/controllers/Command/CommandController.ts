@@ -64,23 +64,32 @@ class CommandController {
         next: NextFunction
     ) {
         try {
-            const commands = await Command.find({ restaurantId: req.query.id }).exec(); //isrecceived : true
+            const dtoCommands = [];
+            const commands = await Command.find({ restaurantId: req.params.id })
+                .populate({ path: 'restaurantId' })
+                .exec(); //isrecceived : true
+            const commandsLength = commands.length;
 
             const commandLength = commands.length;
             if (commandLength == 0) {
-                Log.error(
+                Log.info(
                     'Route :: [/command/by-restaurant] there is not commands for this restaurant'
                 );
-                return next(
-                    new ApiError({
-                        status: 404,
-                        message: 'No commands for this restaurant'
-                    })
-                );
+                return res.status(200).json(commands);
             }
-            return res.status(200).json(commands);
+            for (let i = 0; i < commandsLength; i++) {
+                const user = await prisma.user.findFirst({
+                    where: { uuid: commands[i].userId }
+                });
+                const addr = await prisma.address.findFirst({
+                    where: { uuid: commands[i].address }
+                });
+                const data = CommandController.toComplexDto(commands[i], addr, user);
+                dtoCommands.push(data);
+            }
+
+            return res.status(200).json(dtoCommands);
         } catch (error) {
-            console.log('s', error);
             Log.error('Route :: [/command/by-restaurant :' + error);
             return next(
                 new ApiError({
@@ -112,6 +121,22 @@ class CommandController {
                 }
             }
             return res.status(200).json(dtoCommand);
+        } catch (error) {
+            Log.error('Route :: [/command/get-all :' + error);
+            return next(
+                new ApiError({
+                    status: 500,
+                    message: 'Could not retrieve commands'
+                })
+            );
+        }
+    }
+
+    public static async deleteCommand(req: Request, res: Response, next: NextFunction) {
+        const id = req.params.id;
+
+        try {
+            await Command.deleteOne({ _id: id });
         } catch (error) {
             Log.error('Route :: [/command/get-all :' + error);
             return next(
@@ -190,6 +215,28 @@ class CommandController {
         };
 
         return commandDto;
+    }
+
+    private static toComplexDto(command: ICommand, addr: IAddress, user: any) {
+        const dto = {
+            price: command.price,
+            products: command.products,
+            restaurantId: command.restaurantId,
+            delivery: command.delivery,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            phone: user.phone,
+            address: addr.street,
+            city: addr.city,
+            zipCode: addr.zipCode,
+            isAccepted: command.isAccepted,
+            isRecieved: command.isRecieved,
+            uuid: command.uuid,
+            deleted: command.deleted
+        };
+
+        return dto;
     }
 }
 export default CommandController;

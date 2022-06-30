@@ -477,13 +477,14 @@
                 }
             }
         },
-        "/command/by-restaurant": {
+        "/command/by-restaurant/{id}": {
             "get": {
                 "description": "",
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "query",
+                        "in": "path",
+                        "required": true,
                         "type": "string"
                     }
                 ],
@@ -492,6 +493,20 @@
                         "description": "OK"
                     }
                 }
+            }
+        },
+        "/command/delete/{id}": {
+            "delete": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {}
             }
         },
         "/restaurant/get-all": {
