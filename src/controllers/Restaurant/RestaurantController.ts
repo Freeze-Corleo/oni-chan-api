@@ -235,6 +235,8 @@ class RestaurantController {
     ) {
         const id = req.params.id;
         const restaurantWanted: IRestaurant = req.body;
+        delete restaurantWanted._id;
+        console.log('yo', restaurantWanted, id);
         try {
             const updtableRestaurant = await Restaurant.findOneAndUpdate(
                 { _id: id },
@@ -246,6 +248,7 @@ class RestaurantController {
             console.log('e');
             return res.status(200).json(updtableRestaurant);
         } catch (error) {
+            console.log('er', error);
             Log.error(error);
             return JSON.stringify('Cannot update a restaurant');
         }
