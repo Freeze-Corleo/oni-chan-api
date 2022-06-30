@@ -106,6 +106,7 @@ router.get('/command/get-all', CommandController.getAllCommand);
 router.post('/command/create', CommandController.createCommand);
 router.post('/command/get-all/user/:id', CommandController.getCommandsByUserId);
 router.post('/command/history/user/:id', CommandController.getCommandHistoryByUserId);
+router.get('/command/by-restaurant', CommandController.getCommandByRestaurantId);
 
 /**
  * Restaurant endpoints
@@ -120,6 +121,7 @@ router.get('/restaurant/get/:id', RestaurantController.getRestaurantById);
 // router.get('/restaurant/get-product', RestaurantController.requestProductGetByRestaurantId);
 router.delete('/restaurant/delete/:id', RestaurantController.deleteRestaurantById);
 router.put('/restaurant/update/:id', RestaurantController.requestUpdateRestaurantById);
+router.get('/restaurant/statistics', RestaurantController.getStatRestaurant);
 
 /**
  * Category products endpoints

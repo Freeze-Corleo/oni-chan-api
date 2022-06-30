@@ -58,6 +58,39 @@ class CommandController {
         }
     }
 
+    public static async getCommandByRestaurantId(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        try {
+            const commands = await Command.find({ restaurantId: req.query.id }).exec(); //isrecceived : true
+
+            const commandLength = commands.length;
+            if (commandLength == 0) {
+                Log.error(
+                    'Route :: [/command/by-restaurant] there is not commands for this restaurant'
+                );
+                return next(
+                    new ApiError({
+                        status: 404,
+                        message: 'No commands for this restaurant'
+                    })
+                );
+            }
+            return res.status(200).json(commands);
+        } catch (error) {
+            console.log('s', error);
+            Log.error('Route :: [/command/by-restaurant :' + error);
+            return next(
+                new ApiError({
+                    status: 500,
+                    message: 'Could not retrieve commands by restaurant id'
+                })
+            );
+        }
+    }
+
     public static async getAllCommand(req: Request, res: Response, next: NextFunction) {
         const dtoCommand = [];
         try {

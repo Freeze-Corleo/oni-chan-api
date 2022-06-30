@@ -13,8 +13,56 @@ import Customization from '../../models/schema/Customization';
 import CategoryProduct from '../../models/schema/CategoryProduct';
 import Partner from '../../models/schema/Partner';
 
+import Command from '../../models/schema/Command';
+
 const prisma = new PrismaClient();
 class RestaurantController {
+    public static async getStatRestaurant(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        try {
+            //Get every command by restaurant id
+            const commands = await Command.find({ restaurantId: req.query.id }).exec(); //isrecceived : true
+
+            if (!commands) {
+                Log.error(
+                    'Route :: [/command/get-all] there is not commands with this restaurant id'
+                );
+                return next(
+                    new ApiError({
+                        status: 404,
+                        message: 'No commands with this restaurant id'
+                    })
+                );
+            }
+
+            //calcul the total price
+            let price: number = 0;
+            commands.forEach((command) => {
+                price += command.price;
+            });
+
+            let commandCount: number = commands.length;
+
+            console.log(commandCount);
+            const han = {
+                totalPrice: price,
+                totalCommandCount: commandCount
+            };
+            return res.status(200).json(commands);
+        } catch (error) {
+            Log.error('Route :: [/restaurant/statistics :' + error);
+            return next(
+                new ApiError({
+                    status: 500,
+                    message: 'Could not retrieve statistics'
+                })
+            );
+        }
+    }
+
     public static async getAllRestaurant(
         req: Request,
         res: Response,
