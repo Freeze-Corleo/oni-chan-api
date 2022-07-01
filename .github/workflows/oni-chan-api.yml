@@ -68,14 +68,14 @@ jobs:
           heroku_app_name: "test-onichan-api"
           heroku_email: delponleo@gmail.com
         env:
-          HD_MONGOOSE_URL: mongodb://admin_freezecorleone:Tdedf3883&ChevalierBleu667&sofreezelaw@4.tcp.ngrok.io:17407/?readPreference=primary&appname=MongoDB%20Compass&ssl=false
+          HD_MONGOOSE_URL: mongodb://admin_freezecorleone:Tdedf3883&ChevalierBleu667&sofreezelaw@2.tcp.ngrok.io:13595/?readPreference=primary&appname=MongoDB%20Compass&ssl=false
           HD_HOST_MS: 4.tcp.ngrok.io
           HD_USERNAME_MS: root
           HD_PASSWORD_MS: Leodelponcesi12345&
           HD_DB_MS: db_freezou
           HD_PORT_MS: 19000
-          HD_DATABASE_URL: mysql://root:Leodelponcesi12345&@4.tcp.ngrok.io:10188/db_freezou?connection_limit=5
-          HD_PRISMA_DATABASE: mysql://root:Leodelponcesi12345&@4.tcp.ngrok.io:10188/db_freezou?connection_limit=5
+          HD_DATABASE_URL: mysql://root:Leodelponcesi12345&@8.tcp.ngrok.io:16887/db_freezou?connection_limit=5
+          HD_PRISMA_DATABASE: mysql://root:Leodelponcesi12345&@8.tcp.ngrok.io:16887/db_freezou?connection_limit=5
           HD_SEND_GRID_KEY: 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
           HD_SG_REGISTER_TEMPLATE: d-095286ba916642f9ae5ea4a9b4ae8701
           HD_GOOGLE_CLIENT_ID: 749879349440-49s7sv0vkd0i6cv01659m5vteivtqmqn.apps.googleusercontent.com
