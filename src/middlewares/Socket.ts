@@ -17,7 +17,8 @@ class Socket {
         this.io = this.socketio(_express, {
             cors: {
                 origin: 'https://oni-chan-dashbard.vercel.app/'
-            }
+            },
+            secure: true
         });
         this.io.on('connection', (socket) => {
             console.log('New client connected');
