@@ -87,7 +87,6 @@ class CommandController {
                 const data = CommandController.toComplexDto(commands[i], addr, user);
                 dtoCommands.push(data);
             }
-
             return res.status(200).json(dtoCommands);
         } catch (error) {
             Log.error('Route :: [/command/by-restaurant :' + error);
@@ -210,7 +209,8 @@ class CommandController {
             isAccepted: command.isAccepted,
             isRecieved: command.isRecieved,
             uuid: command.uuid,
-            deleted: command.deleted
+            deleted: command.deleted,
+            _id: command._id
         };
 
         return commandDto;
@@ -232,7 +232,8 @@ class CommandController {
             isAccepted: command.isAccepted,
             isRecieved: command.isRecieved,
             uuid: command.uuid,
-            deleted: command.deleted
+            deleted: command.deleted,
+            _id: command._id
         };
 
         return dto;

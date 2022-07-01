@@ -16,8 +16,15 @@ class UpdateCommandController {
         try {
             if (state === 'accepted_restaurant') {
                 await Command.findOneAndUpdate({ _id: id }, { isAccepted: true });
-                command = Command.find();
-                return res.status(200).json(command);
+                command = await Command.find();
+                const user = await prisma.user.findFirst({
+                    where: { uuid: command.userId }
+                });
+                const addr = await prisma.address.findFirst({
+                    where: { uuid: command.address }
+                });
+                const data = UpdateCommandController.toComplexDto(command, addr, user);
+                return res.status(200).json(data);
             } else if (state === 'recieved') {
                 command = await Command.findOneAndUpdate(
                     { _id: id },
@@ -44,7 +51,7 @@ class UpdateCommandController {
         } catch (error) {
             Log.error(`Route :: [/command/update-command] server error: ${error}`);
             return next(
-                new ApiError({ status: 500, message: 'Could not create the command' })
+                new ApiError({ status: 500, message: 'Could not update the command' })
             );
         }
     }
@@ -66,7 +73,7 @@ class UpdateCommandController {
             isRecieved: command.isRecieved,
             uuid: command.uuid,
             deleted: command.deleted,
-            _id: command.id
+            _id: command._id
         };
 
         return dto;

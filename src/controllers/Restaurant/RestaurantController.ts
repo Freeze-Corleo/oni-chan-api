@@ -17,54 +17,54 @@ import Command from '../../models/schema/Command';
 
 const prisma = new PrismaClient();
 class RestaurantController {
-
-    public static async getStatisticsRestaurantsByUserId(req: Request, res: Response, next: NextFunction){
-        try{
+    public static async getStatisticsRestaurantsByUserId(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        try {
             //get partner from user id
-            const partner = await Partner.findOne({userId: req.query.id}).exec();
+            const partner = await Partner.findOne({ userId: req.query.id }).exec();
 
             const everyCommands = [];
-            const strNowMonth = "0"+(new Date().getMonth()+1);
-            
-            let price: number = 0;
-            let commandCount: number = 0;
-            let restaurantCount: number = 0;
-            let commandCountThisMonth: number = 0;
-            let priceThisMonth: number = 0;
+            const strNowMonth = '0' + (new Date().getMonth() + 1);
 
-            for (let restaurant of partner.restaurants) {
-                const commands = await Command.find({restaurantId: restaurant._id})
+            let price = 0;
+            let commandCount = 0;
+            let restaurantCount = 0;
+            let commandCountThisMonth = 0;
+            let priceThisMonth = 0;
+
+            for (const restaurant of partner.restaurants) {
+                const commands = await Command.find({ restaurantId: restaurant._id });
                 restaurantCount += 1;
 
-                if(commands.length !== 0) {
+                if (commands.length !== 0) {
                     console.log(commands);
-                    commands.forEach(command => {
+                    commands.forEach((command) => {
                         price += command.price;
                         commandCount += 1;
-                        
+
                         const han = new Date(command.createdAt).toLocaleDateString();
                         const [day, month, year] = han.toString().split('/');
-                        console.log(strNowMonth+"   --  "+month);
-                        if(strNowMonth.toString() == month){
+                        console.log(strNowMonth + '   --  ' + month);
+                        if (strNowMonth.toString() == month) {
                             commandCountThisMonth += 1;
                             priceThisMonth += command.price;
                         }
-
                     });
                 }
             }
-        
-            const han = 
-            {
+
+            const han = {
                 totalPrice: price,
                 totalCommandCount: commandCount,
                 thisMonthCommandCount: commandCountThisMonth,
                 thisMonthPrice: priceThisMonth,
                 totalRestaurantCount: restaurantCount
-            }
+            };
             return res.status(200).json(han);
-
-        }catch(error){
+        } catch (error) {
             Log.error('Route :: [/restaurant/statistics :' + error);
             return next(
                 new ApiError({
@@ -89,9 +89,11 @@ class RestaurantController {
                 return next(new ApiError({ status: 404, message: 'No restaurants' }));
             }
             for (let i = 0; i < restLength; ++i) {
+                console.log(restaurants[0].address);
                 const addr = await prisma.address.findFirst({
                     where: { uuid: restaurants[i].address }
                 });
+                console.log(addr);
                 const data = RestaurantController.toDto(restaurants[i], addr);
                 dtoRestaurant.push(data);
             }
@@ -200,7 +202,6 @@ class RestaurantController {
         }
 
         address.uuid = AuthTools.uuiGenerator();
-
         addr[0] = await prisma.address.create({
             data: address
         });
