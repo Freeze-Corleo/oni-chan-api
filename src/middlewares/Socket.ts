@@ -16,7 +16,7 @@ class Socket {
         Log.info('Socket :: Mounting Socket server in API');
         this.io = this.socketio(_express, {
             cors: {
-                origin: 'http://localhost:3000'
+                origin: 'https://oni-chan-dashbard-818ywef61-freeze-corleo-vercel.vercel.app'
             }
         });
         this.io.on('connection', (socket) => {

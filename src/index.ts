@@ -2,6 +2,7 @@ import * as os from 'os';
 import * as cluster from 'cluster';
 
 import ClusterEvent from './exception/ClusterEvent';
+import Locals from './providers/Local';
 
 import App from './providers/App';
 
